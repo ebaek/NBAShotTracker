@@ -27,6 +27,9 @@
   * Vanilla Javascript for overall structure and create an interactive menu 
   * D3 library (d3-hex) to render basketball court and shots taken
   * Webpack to bundle scripts into a single source
+  
+## Dataset 
+  * [NBA Savant Shot Tracker 2017 - 2018](https://nbasavant.com/shot_search.php)
 
 ## Implementation Timeline
   * Day 1: Render the chart using D3

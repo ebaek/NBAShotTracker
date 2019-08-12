@@ -28,6 +28,9 @@
   * D3 library (d3-hex) to render basketball court and shots taken
   * Webpack to bundle scripts into a single source
   
+## Wireframe
+![Wireframe of the basketball tracker](screenshots/wireframe.jpg)
+  
 ## Dataset 
   * [NBA Savant Shot Tracker 2017 - 2018](https://nbasavant.com/shot_search.php)
 

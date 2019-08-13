@@ -1,0 +1,46 @@
+{
+  "name": "NBAShotTracker",
+  "version": "1.0.0",
+  "description": "## Background and Overview   ### Motivation:    * As an avid NBA fan, I wanted to create a tool to enable other fans to see the shot performance of their      favorite players. While the NBA stats website has a plethora of data that includes several variations of the short chart,    the goal of creating NBA Shot Tracker was to enable users to see the chronological shot performance of individual players    by game.    ### High Level Overview:    * The NBA Shot Tracker renders an animation of an individual player's shot performance. Users can    filter the data by game (game date), range, type of shot, and defending team.",
+  "main": "index.js",
+  "dependencies": {
+    "autoprefixer": "^9.6.1",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "css-loader": "^3.2.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "node-sass": "^4.12.0",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^7.2.0",
+    "style-loader": "^1.0.0",
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.8.0",
+    "webpack-merge": "^4.2.1",
+    "webpack": "^4.39.1"
+  },
+  "devDependencies": {},
+  "browserslist": [
+    "last 1 version",
+    "> 1%",
+    "maintained node versions",
+    "not dead"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --config webpack.dev.js",
+    "watch": "webpack --watch --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js  --optimize-minimize"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ebaek/NBAShotTracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ebaek/NBAShotTracker/issues"
+  },
+  "homepage": "https://github.com/ebaek/NBAShotTracker#readme"
+}

@@ -3,7 +3,7 @@
 ## Background and Overview
   ### Motivation: 
   * As an avid NBA fan, I wanted to create a tool to enable other fans to see the shot performance of their   
-  favorite players. While the NBA stats website has a plethora of data that includes several variations of the short chart, 
+  favorite players. While the NBA stats website has a plethora of data that includes several variations of the shot chart, 
   the goal of creating NBA Shot Tracker was to enable users to see the chronological shot performance of individual players 
   by game. 
   ### High Level Overview: 

@@ -1,41 +1,66 @@
 const path = require("path");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const outputDir = "./dist";
 
 module.exports = {
-    entry: path.resolve(__dirname, "src", "index.js"), 
+    entry: path.resolve(__dirname, "src", "index.js"), //
     output: {
         path: path.join(__dirname, outputDir),
         filename: "[name].js",
         publicPath: "/dist/"
     },
     resolve: {
-        extensions: [".js"] 
+        extensions: [".js"] // if we were using React.js, we would include ".jsx"
     },
     module: {
         rules: [
             {
-                test: /\.js$/, 
+                test: /\.js$/, // if we were using React.js, we would use \.jsx?$/
                 use: {
                     loader: "babel-loader",
-                    options: { presets: ["env"] } 
+                    options: { presets: ["env"] } // if we were using React.js, we would include "react"
                 }
             },
             {
                 test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    use: ["css-loader", "postcss-loader"],
-                    fallback: "style-loader"
-                })
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            // you can specify a publicPath here
+                            // by default it uses publicPath in webpackOptions.output
+                            publicPath: "../",
+                            hmr: process.env.NODE_ENV === "development"
+                        }
+                    },
+                    "css-loader",
+                    "postcss-loader"
+                ]
             },
             {
                 test: /\.scss/,
-                use: ExtractTextPlugin.extract({
-                    use: ["css-loader", "sass-loader", "postcss-loader"],
-                    fallback: "style-loader"
-                })
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            // you can specify a publicPath here
+                            // by default it uses publicPath in webpackOptions.output
+                            publicPath: "../",
+                            hmr: process.env.NODE_ENV === "development"
+                        }
+                    },
+                    "css-loader",
+                    "sass-loader",
+                    "postcss-loader"
+                ]
             }
         ]
     },
-    plugins: [new ExtractTextPlugin("[name].css"), require("autoprefixer")]
+    plugins: [new MiniCssExtractPlugin({
+        // Options similar to the same options in webpackOptions.output
+        // all options are optional
+        filename: "[name].css",
+        chunkFilename: "[id].css",
+        ignoreOrder: false // Enable to remove warnings about conflicting order
+    }), require("autoprefixer")]
 };

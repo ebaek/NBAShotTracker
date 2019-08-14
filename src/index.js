@@ -8,7 +8,12 @@ const CONSTANTS = {
 
 document.addEventListener("DOMContentLoaded", () => {
     draw("Jimmy Butler");
-    playerMenu();
+    const searchfield = document.querySelector("input");
+    
+    searchfield.oninput = (text) => {
+        debugger
+        playerMenu(text.target.value);
+    };
 });
 
 function draw(playerName) {
@@ -21,9 +26,27 @@ function draw(playerName) {
     const shots = new Shots(svg, playerName);
 }
 
-function playerMenu() {
+function playerMenu(searchText) {
+    let resultCount = 0;
 
-    // MENU BAR THAT'S SUPER SLOW
+    d3.csv("../dataset/nba_savant.csv")
+        .then(function (data) {
+            debugger
+            const searchLength = searchText.length;
+
+            data.forEach(player => {
+                if (player.name.slice(0, searchLength).toLowerCase() === searchText.toLowerCase() && resultCount <= 6) {
+                    d3.select(".searchresults")
+                        .append("li")
+                        .text(player.name)                    
+                    resultCount += 1;
+                }
+            })
+
+        })
+}
+
+
     // d3.csv("../dataset/nba_savant.csv")
     //     .then(function (data) {
     //         const selector = d3.select("body")
@@ -36,6 +59,7 @@ function playerMenu() {
     //             .attr("value", function (d, i) {
     //                 return i;
     //             });
+    //     })
             
     //         let i = Math.round(Math.random() * data.length);
     //         d3.select("#playerSelector").property("selectedIndex", i);
@@ -60,5 +84,5 @@ function playerMenu() {
     //                     return data[i]['team_name'];
     //                 })
     //         }
-    //     })
-}
+        // })
+// }

@@ -1,15 +1,23 @@
 const CONSTANTS = {
-    ROWS: 60,
-    COLS: 60,
+    ROWS: 50,
+    COLS: 47,
     WIDTH: 550,
-    HEIGHT: 480,
+    HEIGHT: 470,
+    SHOT_OPACITY: "0.7",
 }
 
 class Shots {
-    constructor(svg) {
+    constructor(svg, playerName) {
         this.svg = svg;
         
-        this.hexRadius = d3.min([CONSTANTS.WIDTH/((CONSTANTS.COLS + 0.5) * Math.sqrt(3)), CONSTANTS.HEIGHT/((CONSTANTS.ROWS + 1/3) * 1.5)]);        
+        d3.csv("../dataset/nba_savant.csv")
+            .then(function (d) {
+                d.forEach(player => {
+                    if (player.name === playerName) {
+                        player.shot_made_flag === "1" ? this.render([player.x, player.y], "made") : this.render([player.x, player.y], "missed");
+                    }
+                })
+            }.bind(this))
     }
 
     hexCenters() {
@@ -24,20 +32,36 @@ class Shots {
         return centers;
     }
 
-    render() {
-        const points = this.hexCenters();
-        const hexbin = d3.hexbin().radius(this.hexRadius);
+    render(playerPos, shotFlag) {
+        const hexbin = d3.hexbin().radius(5);
 
-        this.svg.append("g")
-            .selectAll(".hexagon")
-            .data(hexbin(points))
-            .enter().append("path")
-            .attr("d", function(d) {
-                return "M" + d.x + "," + d.y + hexbin.hexagon();
-            })
-            .attr("stroke", "white")
-            .attr("fill-opacity", "0.4")
-            .attr("stroke-width", "0.2px");
+        if(shotFlag === "made") {
+            this.svg.append("g")
+                .selectAll(".hexagon")
+                .data(hexbin([playerPos]))
+                .enter().append("path")
+                .attr("d", function (d) {
+                    return "M" + d.x + "," + d.y + hexbin.hexagon();
+                })
+                .attr("stroke", "white")
+                .attr('transform', 'translate(250, 52.5)')
+                .attr("fill", "skyblue")
+                .attr("fill-opacity", CONSTANTS.SHOT_OPACITY)
+                .attr("stroke-width", "0.1px");
+        } else if (shotFlag === "missed") {
+            this.svg.append("g")
+                .selectAll(".hexagon")
+                .data(hexbin([playerPos]))
+                .enter().append("path")
+                .attr("d", function (d) {
+                    return "M" + d.x + "," + d.y + hexbin.hexagon();
+                })
+                .attr("stroke", "white")
+                .attr('transform', 'translate(250, 52.5)')
+                .attr("fill", "darkred")
+                .attr("fill-opacity", CONSTANTS.SHOT_OPACITY)
+                .attr("stroke-width", "0.1px");
+        }
     }
 }
 

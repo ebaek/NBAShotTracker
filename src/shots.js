@@ -9,17 +9,17 @@ const CONSTANTS = {
 class Shots {
 
     // add date in constructor
-    constructor(svg, playerName, date) {
+    constructor(svg, playerName, date, period) {
         this.svg = svg;
         
-
         d3.csv("../dataset/dataset.csv")
             .then(function (d) {
 
                 d.forEach(player => {
                     const dateConditional = date === undefined ? true : player.game_date === date;
+                    const periodConditional = period === undefined ? true : player.period === period;
 
-                    if (player.name === playerName && dateConditional) {
+                    if (player.name === playerName && dateConditional && periodConditional) {
                         player.shot_made_flag === "1" ? this.render([player.x, player.y], "made") : this.render([player.x, player.y], "missed");
                     }
                 })

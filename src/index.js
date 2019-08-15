@@ -1,5 +1,6 @@
 import Court from './court';
 import Shots from './shots';
+import Qbutton from './qbutton';
 import Widgets from './widgets';
 
 const CONSTANTS = {
@@ -15,18 +16,20 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 });
 
-function clearChart() {
+export function clearChart() {
     d3.select("svg").remove();
 }
 
-function drawChart(playerName, date) {    
+export function drawChart(playerName, date, period) {    
+    clearChart();
+
     let svg = d3.select("#svgcontainer")
         .append("svg").attr("width", CONSTANTS.courtWidth).attr("height", CONSTANTS.courtHeight);
     
     const court = new Court(svg);
     court.render();
 
-    const shots = new Shots(svg, playerName, date);
+    const shots = new Shots(svg, playerName, date, period);
 }
 
 function clearPlayerMenuResults() {
@@ -59,7 +62,7 @@ function playerMenu(searchText) {
                         .text(player.name) 
                         .on("click", function (d, i) {
                             const playerName = d3.event.target.textContent;
-                            clearChart();
+                            // clearChart();
                             clearSearch(playerName);
                             clearPlayerMenuResults();
                             clearPlayerGames();
@@ -94,13 +97,13 @@ function clearAllGamesButton() {
 }
 
 function displayAllGamesButton(playerName) {
-    d3.select(".search-div")
+    d3.select(".allbutton-div")
         .append("input")
         .property("type", "button")
         .property("value", "All Games")
         .attr("class", "allshotsbutton")
         .on("click", function (d, i) {
-            clearChart();
+            // clearChart();
             drawChart(playerName);
         })
 }
@@ -126,11 +129,11 @@ function displayPlayerGames(games) {
                 d3.event.target.parentElement.classList.toggle("selectedgame");
                 const playerName = d3.select(".searchfield")._groups[0][0].placeholder;
                 const date = d3.event.target.parentElement.textContent;
-                clearChart();
+                // clearChart();
                 drawChart(playerName, date);
                 
                 //change
-                displayGameSlider("potato");
+                displayQuarterButtons(playerName, date);
             })
     })
 }
@@ -140,10 +143,18 @@ function clearPlayerGames() {
         .remove();
 }
 
-function displayGameSlider(selectorData) {
-    d3.select(".search-div")
-        .append("input")
-        .property("type", "range")
-        // .attr("class", "gameslider")
+
+function displayQuarterButtons(playerName, date) {
+    d3.selectAll(".quarters input")
+        .remove();
+
+    for(let i = 1; i < 5; i++) {
+        const qNum = i;
+        const quarter = "Q" + qNum.toString();
+        new Qbutton(playerName, date, quarter);
+    }
+
+    // E 
+    new Qbutton(playerName, date);
 }
 

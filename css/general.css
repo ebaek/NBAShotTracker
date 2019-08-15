@@ -97,14 +97,21 @@ input::placeholder {
     background: rgba(6, 65, 101, 0.488);
 }
 
+.games-div {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 70%;
+}
+
 .games {
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: row;
     box-sizing: border-box;
-    width: 70%;
     overflow-x: scroll;
+    width: 100%;
 }
 
 .games li {
@@ -132,9 +139,15 @@ input::placeholder {
     height: 75px;
 }
 
+.allbutton-div {
+    margin-top: 10%;
+    display: flex;
+    justify-content: center;
+    width: 60%;
+}
+
 .allshotsbutton {
-    margin-top: 5%;
-    width: 70%;
+    width: 100%;
     height: 35px;
     border-radius: 5px;
     font-family: 'Oswald', sans-serif;
@@ -166,32 +179,44 @@ input::placeholder {
     padding: 0;
 }
 
-.gameslider {
+.quarters {
+    margin-top: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    height: 30px;
     width: 75%;
 }
 
-input[type=range] {
-  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
-  width: 100%; /* Specific width is required for Firefox. */
-  background: transparent; /* Otherwise white in Chrome */
+.quarters input {
+    box-sizing: border-box;
+    width: 50px;
+    height: 20px;
+    border: 1px solid rgba(213, 213, 213, 0.461);
+    color: rgba(213, 213, 213, 0.461);
+    border-radius: 5px;
+    background: black;
 }
 
-input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none;
+.quarters input:focus {
+    outline: none;
 }
 
-input[type=range]:focus {
-  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+.quarters input:hover {
+    border: 1px solid skyblue;
+    color: skyblue;
 }
 
-input[type=range]::-ms-track {
-  width: 100%;
-  cursor: pointer;
-
-  /* Hides the slider so custom styles can be added */
-  background: transparent; 
-  border-color: transparent;
-  color: transparent;
+.quarters input:active {
+    border: 1px solid skyblue;
+    color: skyblue;
 }
+
+.qactive {
+    border: 1px solid skyblue !important;
+    color: skyblue !important;
+}
+
+
 
 

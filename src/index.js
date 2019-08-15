@@ -8,7 +8,7 @@ const CONSTANTS = {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    draw("Jimmy Butler");
+    drawChart("Jimmy Butler");
 
     const searchfield = document.querySelector("input");
 
@@ -17,19 +17,29 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 });
 
-function draw(playerName) {
+function clearChart() {
+    d3.select("svg").remove();
+}
+
+function drawChart(playerName) {    
     let svg = d3.select("#svgcontainer")
         .append("svg").attr("width", CONSTANTS.courtWidth).attr("height", CONSTANTS.courtHeight);
-
+    
     const court = new Court(svg);
     court.render();
 
     const shots = new Shots(svg, playerName);
 }
 
-function clearPlayerMenuResults(){
+function clearPlayerMenuResults() {
     d3.selectAll(".searchresults li")
         .remove();
+}
+
+function clearSearch(playerName) {
+    d3.selectAll(".searchfield")
+        .property("value", "")
+        .property("placeholder", playerName)
 }
 
 function playerMenu(searchText) {
@@ -47,54 +57,16 @@ function playerMenu(searchText) {
                     d3.select(".searchresults")
                         .append("li")
                         .attr("class", "playeroption")
-                        .on("click", () => {
-                            console.log("potato")
-                        })
                         .text(player.name) 
+                        .on("click", function (d, i) {
+                            clearChart();
+                            clearSearch(d3.event.target.textContent);
+                            clearPlayerMenuResults()
+                            drawChart(d3.event.target.textContent);
+                        })
 
                     players.push(player.name);
                 }
             });
         });
 }
-
-
-    // d3.csv("../dataset/nba_savant.csv")
-    //     .then(function (data) {
-    //         const selector = d3.select("body")
-    //             .append("select")
-    //             .attr("id", "playerSelector")
-    //             .selectAll("option")
-    //             .data(data)
-    //             .enter().append("option")
-    //             .text(function (d) { return d.name; })
-    //             .attr("value", function (d, i) {
-    //                 return i;
-    //             });
-    //     })
-            
-    //         let i = Math.round(Math.random() * data.length);
-    //         d3.select("#playerSelector").property("selectedIndex", i);
-
-    //         d3.select("body")
-    //             .append("p")
-    //             .data(data)
-    //             .text(function (d) {
-    //                 return data[i]['team_name'];
-    //             })
-
-    //         d3.select("#playerSelector")
-    //             .on("change", function (d) {
-    //                 i = this.value;
-    //                 update();
-    //             })
-            
-    //         function update() {
-    //             d3.selectAll("p")
-    //                 .data(data)
-    //                 .text(function (d) {
-    //                     return data[i]['team_name'];
-    //                 })
-    //         }
-        // })
-// }

@@ -117,7 +117,8 @@ function displayAllGamesButton(playerName) {
 
 function displayPlayerGames(games) {
     const allGames = games;
-    
+    const activeClass = "selectedgame";
+
     Object.keys(allGames).forEach( (date) => {
         const opp = allGames[date].split(" ");
         const teamName = opp[opp.length - 1]; 
@@ -132,13 +133,17 @@ function displayPlayerGames(games) {
             .attr("class", "teamLogo")
             .property("src", `../assets/${teamName}.png`)
             .on("click", function (d, i) {
-                // d3.event.target.parentElement.parentElement.children.classList.remove("selectedgame");
-                d3.event.target.parentElement.classList.toggle("selectedgame");
                 const playerName = d3.select(".searchfield")._groups[0][0].placeholder;
                 const date = d3.event.target.parentElement.textContent;
                 drawChart(playerName, date);
-                
                 displayQuarterButtons(playerName, date);
+
+                const alreadyIsActive = d3.select(this).classed(activeClass);
+
+                d3.selectAll(".games li")
+                    .classed(activeClass, false);
+
+                d3.select(this.parentElement).classed(activeClass, !alreadyIsActive);
             })
     })
 }

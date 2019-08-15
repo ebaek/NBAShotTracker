@@ -91,7 +91,7 @@ function displayPlayerGames(games) {
     Object.keys(allGames).forEach( (date) => {
         const opp = allGames[date].split(" ");
         const teamName = opp[opp.length - 1]; 
-        
+
         d3.select(".search")
             .text("Search by Game")
 
@@ -102,6 +102,8 @@ function displayPlayerGames(games) {
             .attr("class", "teamLogo")
             .property("src", `../assets/${teamName}.png`)
             .on("click", function (d, i) {
+                // d3.event.target.parentElement.parentElement.children.classList.remove("selectedgame");
+                d3.event.target.parentElement.classList.toggle("selectedgame");
                 const playerName = d3.select(".searchfield")._groups[0][0].placeholder;
                 const date = d3.event.target.parentElement.textContent;
                 clearChart();

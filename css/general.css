@@ -103,7 +103,7 @@ input::placeholder {
     display: flex;
     flex-direction: row;
     box-sizing: border-box;
-    width: 75%;
+    width: 70%;
     overflow-x: scroll;
 }
 
@@ -115,10 +115,15 @@ input::placeholder {
     padding: 10px;
     list-style-type: none;
     font-family: 'Oswald', sans-serif;
-    color: white;
+    color: rgba(213, 213, 213, 0.461);
+    font-size: 14px;
 }
 
 .games li:hover {
+    background-color: rgba(228, 15, 47, 0.29);
+}
+
+.selectedgame {
     background-color: rgba(228, 15, 47, 0.29);
 }
 
@@ -131,6 +136,7 @@ input::placeholder {
     text-indent: 10px;
     width: 75%;
     font-size: 16px;
+    color: white;
     color: rgba(213, 213, 213, 0.461);
     font-family: 'Oswald', sans-serif;
     margin-top: 5%;

@@ -61,7 +61,9 @@ function playerMenu(searchText) {
                             const playerName = d3.event.target.textContent;
                             clearChart();
                             clearSearch(playerName);
-                            clearPlayerMenuResults()
+                            clearPlayerMenuResults();
+                            clearPlayerGames();
+
                             drawChart(playerName);
                             loadPlayerGames(playerName);
                         })
@@ -82,7 +84,25 @@ function loadPlayerGames(player) {
                 }
             });
             displayPlayerGames(games);
+            clearAllGamesButton();
+            displayAllGamesButton(player);
         });
+}
+
+function clearAllGamesButton() {
+    d3.select(".allshotsbutton").remove();
+}
+
+function displayAllGamesButton(playerName) {
+    d3.select(".search-div")
+        .append("input")
+        .property("type", "button")
+        .property("value", "All Games")
+        .attr("class", "allshotsbutton")
+        .on("click", function (d, i) {
+            clearChart();
+            drawChart(playerName);
+        })
 }
 
 function displayPlayerGames(games) {
@@ -108,7 +128,22 @@ function displayPlayerGames(games) {
                 const date = d3.event.target.parentElement.textContent;
                 clearChart();
                 drawChart(playerName, date);
+                
+                //change
+                displayGameSlider("potato");
             })
     })
+}
+
+function clearPlayerGames() {
+    d3.selectAll(".games li")
+        .remove();
+}
+
+function displayGameSlider(selectorData) {
+    d3.select(".search-div")
+        .append("input")
+        .property("type", "range")
+        // .attr("class", "gameslider")
 }
 

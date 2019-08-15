@@ -8,9 +8,9 @@ const CONSTANTS = {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    drawChart("Jimmy Butler");
-
     const searchfield = document.querySelector("input");
+
+    loadPlayerGames("Lebron James");
 
     searchfield.oninput = (text) => {
         text.target.value === "" ? clearPlayerMenuResults() : playerMenu(text.target.value);
@@ -48,7 +48,7 @@ function playerMenu(searchText) {
     d3.csv("../dataset/dataset.csv")
         .then(function (data) {
             const searchLength = searchText.length;
-            let players = []
+            let players = [];
             //set structure
             data.forEach(player => {
                 // trim name (for spaces)
@@ -69,4 +69,34 @@ function playerMenu(searchText) {
                 }
             });
         });
+}
+
+function loadPlayerGames(player) {
+    d3.csv("../dataset/dataset.csv")
+        .then(function (data) {
+            const games = {};
+            data.forEach(shot => {
+                if(shot.name.toLowerCase() === player.toLowerCase() && games[shot.game_date] === undefined) {
+                    games[shot.game_date] = shot.opponent;
+                }
+            });
+
+            displayPlayerGames(games);
+        });
+}
+
+function displayPlayerGames(games) {
+    const allGames = games;
+    
+    Object.keys(allGames).forEach( (date) => {
+        const opp = allGames[date].split(" ");
+        const teamName = opp[opp.length - 1]; 
+
+        d3.select(".games")
+            .append("li")
+            .text(date)
+            .append("img")
+            .attr("class", "teamLogo")
+            .property("src", `../assets/${teamName}.png`)
+    })
 }

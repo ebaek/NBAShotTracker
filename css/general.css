@@ -29,7 +29,6 @@ body {
     flex-direction: column;
     align-items: center;
     width: 30%;
-    /* border: 3px solid green; */
 }
 
 .searchfield{
@@ -93,6 +92,38 @@ input::placeholder {
 
 .searchresults li:hover {
     background: rgba(6, 65, 101, 0.488);
+}
+
+.games {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    border-radius: 5px;
+    width: 75%;
+    overflow-x: scroll;
+    border: 0.75px solid rgba(213, 213, 213, 0.249);
+    box-shadow: 0 0 10px 0 rgba(213, 213, 213, 0.249);
+    /* border: 1px solid orange; */
+}
+
+.games li {
+    display: flex;
+    padding: 0;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    list-style-type: none;
+    font-family: 'Oswald', sans-serif;
+    color: white;
+}
+
+.games li:hover {
+    background-color: rgba(228, 15, 47, 0.29);
+}
+
+.teamLogo {
+    width: 75px;
+    height: 75px;
 }
 
 

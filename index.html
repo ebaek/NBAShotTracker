@@ -6,15 +6,27 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>NBA Shot Tracker</title>
 
+    <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet">
+
     <script src="d3.v5.js"></script>
     <script src="d3-hexbin.v2.min.js"></script>
     <script src="./dist/main.js"></script>
+
+    <link rel="stylesheet" href="./css/general.css">
 </head>
 
 <body>
-    <div id="svgcontainer"></div>
-    <input class="searchfield" type="text" placeholder="Search Player" />
-    <ul class="searchresults"></ul>
+    <h1>NBA Shot Tracker</h1>
+
+    <div class="main-div">
+        <div class="search-div">
+            <input class="searchfield" type="text" placeholder="Search Player" />
+            <ul class="searchresults"></ul>
+        </div>
+        
+        <div id="svgcontainer"></div>
+    </div>
+
 </body> 
 
 </html>

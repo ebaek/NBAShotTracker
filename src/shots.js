@@ -10,7 +10,7 @@ class Shots {
     constructor(svg, playerName) {
         this.svg = svg;
         
-        d3.csv("../dataset/nba_savant.csv")
+        d3.csv("../dataset/dataset.csv")
             .then(function (d) {
                 d.forEach(player => {
                     if (player.name === playerName) {

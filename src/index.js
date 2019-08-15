@@ -1,5 +1,6 @@
 import Court from './court';
 import Shots from './shots';
+import Widgets from './widgets';
 
 const CONSTANTS = {
     courtWidth: 500,
@@ -8,10 +9,11 @@ const CONSTANTS = {
 
 document.addEventListener("DOMContentLoaded", () => {
     draw("Jimmy Butler");
+
     const searchfield = document.querySelector("input");
-    
+
     searchfield.oninput = (text) => {
-        text.target.value === "" ? clearPlayerMenuResults() : playerMenu(text.target.value)
+        text.target.value === "" ? clearPlayerMenuResults() : playerMenu(text.target.value);
     };
 });
 
@@ -26,7 +28,6 @@ function draw(playerName) {
 }
 
 function clearPlayerMenuResults(){
-    debugger
     d3.selectAll(".searchresults li")
         .remove();
 }
@@ -34,16 +35,23 @@ function clearPlayerMenuResults(){
 function playerMenu(searchText) {
     clearPlayerMenuResults();
 
-    d3.csv("../dataset/nba_savant.csv")
+    d3.csv("../dataset/dataset.csv")
         .then(function (data) {
             const searchLength = searchText.length;
             let players = []
+            //set structure
             data.forEach(player => {
-                if (player.name.slice(0, searchLength).toLowerCase() === searchText.toLowerCase() 
-                    && players.length <= 6 && !players.includes(player.name)) {
+                // trim name (for spaces)
+                if ( player.name.slice(0, searchLength).toLowerCase() === searchText.toLowerCase() 
+                    && players.length <= 6 && !players.includes(player.name) ) {
                     d3.select(".searchresults")
                         .append("li")
-                        .text(player.name)                                        
+                        .attr("class", "playeroption")
+                        .on("click", () => {
+                            console.log("potato")
+                        })
+                        .text(player.name) 
+
                     players.push(player.name);
                 }
             });

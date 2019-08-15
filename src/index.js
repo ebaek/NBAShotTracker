@@ -62,7 +62,6 @@ function playerMenu(searchText) {
                         .text(player.name) 
                         .on("click", function (d, i) {
                             const playerName = d3.event.target.textContent;
-                            // clearChart();
                             clearSearch(playerName);
                             clearPlayerMenuResults();
                             clearPlayerGames();
@@ -97,14 +96,22 @@ function clearAllGamesButton() {
 }
 
 function displayAllGamesButton(playerName) {
+    const activeClass = "qactive";
+
     d3.select(".allbutton-div")
         .append("input")
         .property("type", "button")
         .property("value", "All Games")
         .attr("class", "allshotsbutton")
         .on("click", function (d, i) {
-            // clearChart();
             drawChart(playerName);
+
+            const alreadyIsActive = d3.select(this).classed(activeClass);
+
+            d3.selectAll(".quarters input")
+                .classed(activeClass, false);
+
+            d3.select(this).classed(activeClass, !alreadyIsActive);
         })
 }
 
@@ -129,10 +136,8 @@ function displayPlayerGames(games) {
                 d3.event.target.parentElement.classList.toggle("selectedgame");
                 const playerName = d3.select(".searchfield")._groups[0][0].placeholder;
                 const date = d3.event.target.parentElement.textContent;
-                // clearChart();
                 drawChart(playerName, date);
                 
-                //change
                 displayQuarterButtons(playerName, date);
             })
     })
@@ -143,11 +148,11 @@ function clearPlayerGames() {
         .remove();
 }
 
-
 function displayQuarterButtons(playerName, date) {
     d3.selectAll(".quarters input")
         .remove();
 
+    // all quarter buttons
     for(let i = 1; i < 5; i++) {
         const qNum = i;
         const quarter = "Q" + qNum.toString();

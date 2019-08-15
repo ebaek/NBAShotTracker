@@ -15,6 +15,9 @@ class Qbutton {
 
                 d3.selectAll(".quarters input")
                     .classed(activeClass, false);
+                
+                d3.selectAll(".allshotsbutton")
+                    .classed(activeClass, false);
 
                 d3.select(this).classed(activeClass, !alreadyIsActive);
                 

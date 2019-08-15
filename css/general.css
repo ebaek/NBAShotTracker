@@ -62,22 +62,25 @@ input.searchfield {
 
 input::placeholder {
     font-family: 'Oswald', sans-serif;
-    font-size: 14px;
-    color:rgba(213, 213, 213, 0.461);
+    font-size: 16px;
+    color: white;
+    /* color:rgba(213, 213, 213, 0.461); */
 }
 
 .searchresults {
+  position: absolute;
+  width: 23%;
+  top: 16%;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 0;
   margin: 0;
-  width: 75%;
   list-style-type: none;
+  background: black;
   font-family: 'Oswald', sans-serif;
   font-size: 14px;
-  background: black;  
   color: white;
   text-indent: 12px;
 }
@@ -95,14 +98,13 @@ input::placeholder {
 }
 
 .games {
+    padding: 0;
+    margin: 0;
     display: flex;
     flex-direction: row;
     box-sizing: border-box;
-    border-radius: 5px;
     width: 75%;
     overflow-x: scroll;
-    border: 0.75px solid rgba(213, 213, 213, 0.249);
-    box-shadow: 0 0 10px 0 rgba(213, 213, 213, 0.249);
 }
 
 .games li {
@@ -125,5 +127,15 @@ input::placeholder {
     height: 75px;
 }
 
+.search {
+    text-indent: 10px;
+    width: 75%;
+    font-size: 16px;
+    color: rgba(213, 213, 213, 0.461);
+    font-family: 'Oswald', sans-serif;
+    margin-top: 5%;
+    margin-bottom: 0;
+    padding: 0;
+}
 
 

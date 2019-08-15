@@ -10,8 +10,6 @@ const CONSTANTS = {
 document.addEventListener("DOMContentLoaded", () => {
     const searchfield = document.querySelector("input");
 
-    loadPlayerGames("Lebron James");
-
     searchfield.oninput = (text) => {
         text.target.value === "" ? clearPlayerMenuResults() : playerMenu(text.target.value);
     };
@@ -54,15 +52,18 @@ function playerMenu(searchText) {
                 // trim name (for spaces)
                 if ( player.name.slice(0, searchLength).toLowerCase() === searchText.toLowerCase() 
                     && players.length <= 6 && !players.includes(player.name) ) {
+                    
                     d3.select(".searchresults")
                         .append("li")
                         .attr("class", "playeroption")
                         .text(player.name) 
                         .on("click", function (d, i) {
+                            const playerName = d3.event.target.textContent;
                             clearChart();
-                            clearSearch(d3.event.target.textContent);
+                            clearSearch(playerName);
                             clearPlayerMenuResults()
-                            drawChart(d3.event.target.textContent);
+                            drawChart(playerName);
+                            loadPlayerGames(playerName);
                         })
 
                     players.push(player.name);
@@ -90,6 +91,9 @@ function displayPlayerGames(games) {
     Object.keys(allGames).forEach( (date) => {
         const opp = allGames[date].split(" ");
         const teamName = opp[opp.length - 1]; 
+        
+        d3.select(".search")
+            .text("Search by Game")
 
         d3.select(".games")
             .append("li")

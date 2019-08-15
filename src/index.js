@@ -21,14 +21,14 @@ function clearChart() {
     d3.select("svg").remove();
 }
 
-function drawChart(playerName) {    
+function drawChart(playerName, date) {    
     let svg = d3.select("#svgcontainer")
         .append("svg").attr("width", CONSTANTS.courtWidth).attr("height", CONSTANTS.courtHeight);
     
     const court = new Court(svg);
     court.render();
 
-    const shots = new Shots(svg, playerName);
+    const shots = new Shots(svg, playerName, date);
 }
 
 function clearPlayerMenuResults() {
@@ -80,7 +80,6 @@ function loadPlayerGames(player) {
                     games[shot.game_date] = shot.opponent;
                 }
             });
-
             displayPlayerGames(games);
         });
 }
@@ -98,5 +97,12 @@ function displayPlayerGames(games) {
             .append("img")
             .attr("class", "teamLogo")
             .property("src", `../assets/${teamName}.png`)
+            .on("click", function (d, i) {
+                const playerName = d3.select(".searchfield")._groups[0][0].placeholder;
+                const date = d3.event.target.parentElement.textContent;
+                clearChart();
+                drawChart(playerName, date);
+            })
     })
 }
+

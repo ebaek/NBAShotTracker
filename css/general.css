@@ -103,7 +103,6 @@ input::placeholder {
     overflow-x: scroll;
     border: 0.75px solid rgba(213, 213, 213, 0.249);
     box-shadow: 0 0 10px 0 rgba(213, 213, 213, 0.249);
-    /* border: 1px solid orange; */
 }
 
 .games li {

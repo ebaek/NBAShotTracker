@@ -1,11 +1,10 @@
 html, body {
-    width: 100%;
-    overflow-x: hidden;
+    /* width: 100%;
+    overflow-x: hidden; */
 }
 
 html {
     background-color: black;
-    border: 1px solid pink;
 }
 
 h1 { 

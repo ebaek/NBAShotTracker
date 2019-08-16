@@ -39,4 +39,4 @@
   * Day 2: Plot the shots using D3-hex
   * Day 3: Add selectors for game, team played against
   * Day 4: Add selectors and animate the shots 
-  * Day 5: Style
+  * Day 5: Build webscraper 

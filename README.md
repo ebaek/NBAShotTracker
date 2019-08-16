@@ -32,7 +32,7 @@
 ![Wireframe of the basketball tracker](screenshots/wireframe.jpg)
   
 ## Dataset 
-  * [NBA Savant Shot Tracker 2017 - 2018](https://nbasavant.com/shot_search.php)
+  * [NBA Savant Shot Tracker 2010 - 2018](https://nbasavant.com/shot_search.php)
 
 ## Implementation Timeline
   * Day 1: Render the chart using D3

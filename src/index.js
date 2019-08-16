@@ -12,20 +12,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const searchfield = document.querySelector("input");
 
     searchfield.oninput = (text) => {
-        text.target.value === "" ? clearPlayerMenuResults() : debounce(() => playerMenu(text.target.value), 300)();
+        text.target.value === "" ? clearPlayerMenuResults() : debounceSearch(text);
     };
 });
 
-const debounce = (func, delay) => {
-    window.timeoutId;
 
-    return () => {
-        const context = this;
-        // const args = arguments;
-        clearTimeout(window.timeoutId);
-        window.timeoutId = setTimeout(func.bind(context), delay);
+const debounce = (func, delay) => {    
+    let timeoutId;
+
+    return (newArgs) => {
+        const args = newArgs.target.value;
+        
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func(args), delay);
     }
 }
+
+const debounceSearch = debounce((text) => playerMenu(text), 300);
 
 export function clearChart() {
     d3.select("svg").remove();
@@ -57,7 +60,7 @@ function clearSearch(playerName) {
 function playerMenu(searchText) {
     clearPlayerMenuResults();
 
-    d3.csv("./dataset/dataset.csv")
+    d3.csv("../dataset/dataset.csv")
         .then(function (data) {
             const searchLength = searchText.length;
             let players = [];
@@ -87,7 +90,7 @@ function playerMenu(searchText) {
 }
 
 function loadPlayerGames(player) {
-    d3.csv("./dataset/dataset.csv")
+    d3.csv("../dataset/dataset.csv")
         .then(function (data) {
             const games = {};
             data.forEach(shot => {
@@ -141,7 +144,7 @@ function displayPlayerGames(games) {
             .text(date)
             .append("img")
             .attr("class", "teamLogo")
-            .property("src", `./assets/${teamName}.png`)
+            .property("src", `../assets/${teamName}.png`)
             .on("click", function (d, i) {
                 const playerName = d3.select(".searchfield")._groups[0][0].placeholder;
                 const date = d3.event.target.parentElement.textContent;

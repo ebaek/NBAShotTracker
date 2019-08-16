@@ -12,7 +12,7 @@ class Shots {
     constructor(svg, playerName, date, period) {
         this.svg = svg;
         
-        d3.csv("./dataset/dataset.csv")
+        d3.csv("../dataset/dataset.csv")
             .then(function (d) {
 
                 d.forEach(player => {

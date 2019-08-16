@@ -75,8 +75,8 @@ input::placeholder {
 
 .searchresults {
   position: absolute;
-  width: 23%;
-  top: 22%;
+  width: 22.5%;
+  top: 15%;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;

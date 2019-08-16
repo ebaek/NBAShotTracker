@@ -141,7 +141,7 @@ function displayPlayerGames(games) {
             .text(date)
             .append("img")
             .attr("class", "teamLogo")
-            .property("src", `../assets/${teamName}.png`)
+            .property("src", `./assets/${teamName}.png`)
             .on("click", function (d, i) {
                 const playerName = d3.select(".searchfield")._groups[0][0].placeholder;
                 const date = d3.event.target.parentElement.textContent;

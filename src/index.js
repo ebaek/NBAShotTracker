@@ -12,9 +12,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const searchfield = document.querySelector("input");
 
     searchfield.oninput = (text) => {
-        text.target.value === "" ? clearPlayerMenuResults() : playerMenu(text.target.value);
+        text.target.value === "" ? clearPlayerMenuResults() : debounce(() => playerMenu(text.target.value), 300)();
     };
 });
+
+const debounce = (func, delay) => {
+    window.timeoutId;
+
+    return () => {
+        const context = this;
+        // const args = arguments;
+        clearTimeout(window.timeoutId);
+        window.timeoutId = setTimeout(func.bind(context), delay);
+    }
+}
 
 export function clearChart() {
     d3.select("svg").remove();
@@ -46,7 +57,7 @@ function clearSearch(playerName) {
 function playerMenu(searchText) {
     clearPlayerMenuResults();
 
-    d3.csv("../dataset/dataset.csv")
+    d3.csv("./dataset/dataset.csv")
         .then(function (data) {
             const searchLength = searchText.length;
             let players = [];
@@ -55,7 +66,6 @@ function playerMenu(searchText) {
                 // trim name (for spaces)
                 if ( player.name.slice(0, searchLength).toLowerCase() === searchText.toLowerCase() 
                     && players.length <= 6 && !players.includes(player.name) ) {
-                    
                     d3.select(".searchresults")
                         .append("li")
                         .attr("class", "playeroption")
@@ -77,7 +87,7 @@ function playerMenu(searchText) {
 }
 
 function loadPlayerGames(player) {
-    d3.csv("../dataset/dataset.csv")
+    d3.csv("./dataset/dataset.csv")
         .then(function (data) {
             const games = {};
             data.forEach(shot => {

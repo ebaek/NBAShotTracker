@@ -32,11 +32,11 @@
 ![Wireframe of the basketball tracker](screenshots/wireframe.jpg)
   
 ## Dataset 
-  * [NBA Savant Shot Tracker 2017 - 2018](https://nbasavant.com/shot_search.php)
+  * [NBA Savant Shot Tracker 2010 - 2018](https://nbasavant.com/shot_search.php)
 
 ## Implementation Timeline
   * Day 1: Render the chart using D3
   * Day 2: Plot the shots using D3-hex
   * Day 3: Add selectors for game, team played against
   * Day 4: Add selectors and animate the shots 
-  * Day 5: Style
+  * Day 5: Build webscraper 

@@ -7,7 +7,6 @@ const CONSTANTS = {
 }
 
 class Shots {
-
     // add date in constructor
     constructor(svg, playerName, date, period) {
         this.svg = svg;

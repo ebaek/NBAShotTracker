@@ -1,7 +1,7 @@
 import Court from './court';
 import Shots from './shots';
 import Qbutton from './qbutton';
-import Widgets from './widgets';
+import Pies from './pie';
 
 const CONSTANTS = {
     courtWidth: 500,
@@ -11,24 +11,24 @@ const CONSTANTS = {
 document.addEventListener("DOMContentLoaded", () => {
     const searchfield = document.querySelector("input");
 
-    searchfield.oninput = (text) => {
-        text.target.value === "" ? clearPlayerMenuResults() : debounceSearch(text);
+    searchfield.oninput = (event) => {
+        event.target.value === "" ? clearPlayerMenuResults() : debounceSearch(event);
     };
-});
 
+    new Pies();
+});
 
 const debounce = (func, delay) => {    
     let timeoutId;
 
     return (newArgs) => {
         const args = newArgs.target.value;
-        
         clearTimeout(timeoutId);
         timeoutId = setTimeout(() => func(args), delay);
     }
 }
 
-const debounceSearch = debounce((text) => playerMenu(text), 300);
+const debounceSearch = debounce((event) => playerMenu(event), 300);
 
 export function clearChart() {
     d3.select("svg").remove();
@@ -43,7 +43,7 @@ export function drawChart(playerName, date, period) {
     const court = new Court(svg);
     court.render();
 
-    const shots = new Shots(svg, playerName, date, period);
+    new Shots(svg, playerName, date, period);
 }
 
 function clearPlayerMenuResults() {
@@ -64,9 +64,8 @@ function playerMenu(searchText) {
         .then(function (data) {
             const searchLength = searchText.length;
             let players = [];
-            //set structure
+
             data.forEach(player => {
-                // trim name (for spaces)
                 if ( player.name.slice(0, searchLength).toLowerCase() === searchText.toLowerCase() 
                     && players.length <= 6 && !players.includes(player.name) ) {
                     d3.select(".searchresults")
@@ -162,13 +161,11 @@ function displayPlayerGames(games) {
 }
 
 function clearPlayerGames() {
-    d3.selectAll(".games li")
-        .remove();
+    d3.selectAll(".games li").remove();
 }
 
 function displayQuarterButtons(playerName, date) {
-    d3.selectAll(".quarters input")
-        .remove();
+    d3.selectAll(".quarters input").remove();
 
     // all quarter buttons
     for(let i = 1; i < 5; i++) {

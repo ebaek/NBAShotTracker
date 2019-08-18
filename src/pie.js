@@ -14,8 +14,6 @@ class Pie {
     madeMissedStats(timeline) {
         const that = this;
 
-        
-
         d3.csv(CONSTANTS.CSV).then( function(data) {
             const madeMissed = [
                 { name: "Made", value: 0 }, 
@@ -190,7 +188,6 @@ class Pie {
             return distanceStats;
         }).then((stats) => { this.render(stats, "By Distance"); });
     }
-
 
     render(data, label) {
         const radius = Math.min(CONSTANTS.WIDTH, CONSTANTS.HEIGHT) / 2

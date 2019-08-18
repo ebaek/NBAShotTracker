@@ -34,6 +34,7 @@ export function clearChart() {
 
 export function drawChart(playerName, date, period) {    
     clearChart();
+    clearPies();
 
     let svg = d3.select("#svgcontainer")
         .append("svg").attr("width", CONSTANTS.courtWidth).attr("height", CONSTANTS.courtHeight);
@@ -71,6 +72,11 @@ function playerMenu(searchText) {
                         .attr("class", "playeroption")
                         .text(player.name) 
                         .on("click", function (d, i) {
+
+                            d3.selectAll(".searchfield").classed("initial", false);
+                            d3.selectAll(".searchresults").classed("initialresults", false);
+
+
                             const playerName = d3.event.target.textContent;
                             clearSearch(playerName);
                             clearPlayerMenuResults();
@@ -117,8 +123,7 @@ function displayAllGamesButton(playerName) {
 
             const alreadyIsActive = d3.select(this).classed(activeClass);
 
-            d3.selectAll(".quarters input")
-                .classed(activeClass, false);
+            d3.selectAll(".quarters input").classed(activeClass, false);
 
             d3.select(this).classed(activeClass, !alreadyIsActive);
         })
@@ -148,8 +153,7 @@ function displayPlayerGames(games) {
 
                 const alreadyIsActive = d3.select(this).classed(activeClass);
 
-                d3.selectAll(".games li")
-                    .classed(activeClass, false);
+                d3.selectAll(".games li").classed(activeClass, false);
 
                 d3.select(this.parentElement).classed(activeClass, !alreadyIsActive);
             })
@@ -174,8 +178,11 @@ function displayQuarterButtons(playerName, date) {
     new Qbutton(playerName, date);
 }
 
+function clearPies() {
+    d3.selectAll("#svgcontainer svg").remove();
+}
+
 function displayGameBreakdownButton(playerName, teamName, quarter) {
-    // d3.select(".allshotsbutton").remove();
 
     const activeClass = "qactive";
 
@@ -186,6 +193,7 @@ function displayGameBreakdownButton(playerName, teamName, quarter) {
         .attr("class", "breakdownbutton")
         .on("click", function (d, i) {
             clearChart();
+            clearPies();
 
             const svg = d3.select("svg");
 
@@ -216,12 +224,6 @@ function displayGameBreakdownButton(playerName, teamName, quarter) {
             // indiv v.s. team made shots 
             const indivMadeTeam = new Pie(svg, playerName);
             indivMadeTeam.madeTeamStats("Cavaliers");
-
-            const alreadyIsActive = d3.select(this).classed(activeClass);
-
-            d3.selectAll(".quarters input").classed(activeClass, false);
-
-            d3.select(this).classed(activeClass, !alreadyIsActive);
         })
 }
 

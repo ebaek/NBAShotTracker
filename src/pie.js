@@ -213,9 +213,24 @@ class Pie {
             .join("path")
             .attr("fill", d => color(d.data.name))
             .attr("fill-opacity", 0.75)
+            .transition().delay(function (d, i) {
+                return i * 600;
+            }).duration(600)
+            .attrTween('d', function (d) {
+                const i = d3.interpolate(d.startAngle + 0.1, d.endAngle);
+                return function (t) {
+                    d.endAngle = i(t);
+                    return arc(d)
+                }
+            })
+        
+        svg.selectAll("path")
+            .data(arcs)
+            .join("path")
             .attr("d", arc)
             .append("title")
-            .text(d => `${d.data.name}: ${d.data.value.toLocaleString()}`);
+            .text(d => `${d.data.name}: ${d.data.value.toLocaleString()}`)
+            
 
         svg.append("g")
             .attr("font-family", "Oswald")

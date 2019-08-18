@@ -72,10 +72,8 @@ function playerMenu(searchText) {
                         .attr("class", "playeroption")
                         .text(player.name) 
                         .on("click", function (d, i) {
-
                             d3.selectAll(".searchfield").classed("initial", false);
                             d3.selectAll(".searchresults").classed("initialresults", false);
-
 
                             const playerName = d3.event.target.textContent;
                             clearSearch(playerName);
@@ -183,13 +181,12 @@ function clearPies() {
 }
 
 function displayGameBreakdownButton(playerName, teamName, quarter) {
-
-    const activeClass = "qactive";
+    d3.selectAll(".breakdownbutton").remove();
 
     d3.select(".breakdown-div")
         .append("input")
         .property("type", "button")
-        .property("value", "Shot Breakdown")
+        .property("value", "Season Shot Breakdown")
         .attr("class", "breakdownbutton")
         .on("click", function (d, i) {
             clearChart();

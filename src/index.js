@@ -1,7 +1,7 @@
 import Court from './court';
 import Shots from './shots';
 import Qbutton from './qbutton';
-import Pies from './pie';
+import Pie from './pie';
 
 const CONSTANTS = {
     courtWidth: 500,
@@ -14,8 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
     searchfield.oninput = (event) => {
         event.target.value === "" ? clearPlayerMenuResults() : debounceSearch(event);
     };
-
-    new Pies();
 });
 
 const debounce = (func, delay) => {    
@@ -44,11 +42,11 @@ export function drawChart(playerName, date, period) {
     court.render();
 
     new Shots(svg, playerName, date, period);
+
 }
 
 function clearPlayerMenuResults() {
-    d3.selectAll(".searchresults li")
-        .remove();
+    d3.selectAll(".searchresults li").remove();
 }
 
 function clearSearch(playerName) {
@@ -77,9 +75,11 @@ function playerMenu(searchText) {
                             clearSearch(playerName);
                             clearPlayerMenuResults();
                             clearPlayerGames();
-
+                            
                             drawChart(playerName);
                             loadPlayerGames(playerName);
+
+                            displayGameBreakdownButton(playerName);
                         })
 
                     players.push(player.name);
@@ -98,16 +98,13 @@ function loadPlayerGames(player) {
                 }
             });
             displayPlayerGames(games);
-            clearAllGamesButton();
             displayAllGamesButton(player);
         });
 }
 
-function clearAllGamesButton() {
-    d3.select(".allshotsbutton").remove();
-}
-
 function displayAllGamesButton(playerName) {
+    d3.select(".allshotsbutton").remove();
+
     const activeClass = "qactive";
 
     d3.select(".allbutton-div")
@@ -135,8 +132,7 @@ function displayPlayerGames(games) {
         const opp = allGames[date].split(" ");
         const teamName = opp[opp.length - 1]; 
 
-        d3.select(".search")
-            .text("Search by Game")
+        d3.select(".search").text("Search by Game")
 
         d3.select(".games")
             .append("li")
@@ -176,5 +172,56 @@ function displayQuarterButtons(playerName, date) {
 
     // E 
     new Qbutton(playerName, date);
+}
+
+function displayGameBreakdownButton(playerName, teamName, quarter) {
+    // d3.select(".allshotsbutton").remove();
+
+    const activeClass = "qactive";
+
+    d3.select(".breakdown-div")
+        .append("input")
+        .property("type", "button")
+        .property("value", "Shot Breakdown")
+        .attr("class", "breakdownbutton")
+        .on("click", function (d, i) {
+            clearChart();
+
+            const svg = d3.select("svg");
+
+            // made shots
+            const pieMade = new Pie(svg, playerName);
+            pieMade.madeMissedStats();
+
+            // action type
+            const pieAction = new Pie(svg, playerName);
+            pieAction.shotActionStats();
+
+            // shots by quarter 
+            const pieQuarter = new Pie(svg, playerName);
+            pieQuarter.shotQuarterStats();
+
+            // shots by distance
+            const pieDistance = new Pie(svg, playerName);
+            pieDistance.shotDistanceStats();
+
+            // indiv v.s team shots
+
+            // INCLUDE THE TEAM NAME  
+            const indivTeam = new Pie(svg, playerName);
+            indivTeam.indivTeamStats("Cavaliers");
+
+            // INCLUDE THE TEAM NAME  
+
+            // indiv v.s. team made shots 
+            const indivMadeTeam = new Pie(svg, playerName);
+            indivMadeTeam.madeTeamStats("Cavaliers");
+
+            const alreadyIsActive = d3.select(this).classed(activeClass);
+
+            d3.selectAll(".quarters input").classed(activeClass, false);
+
+            d3.select(this).classed(activeClass, !alreadyIsActive);
+        })
 }
 

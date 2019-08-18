@@ -7,13 +7,11 @@ const CONSTANTS = {
 }
 
 class Shots {
-    // add date in constructor
     constructor(svg, playerName, date, period) {
         this.svg = svg;
         
         d3.csv("../dataset/dataset.csv")
             .then(function (d) {
-
                 d.forEach(player => {
                     const dateConditional = date === undefined ? true : player.game_date === date;
                     const periodConditional = period === undefined ? true : player.period === period;

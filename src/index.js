@@ -62,11 +62,12 @@ function playerMenu(searchText) {
     d3.csv("../dataset/dataset.csv")
         .then(function (data) {
             const searchLength = searchText.length;
-            let players = [];
+            let players = {};
 
             data.forEach(player => {
                 if ( player.name.slice(0, searchLength).toLowerCase() === searchText.toLowerCase() 
-                    && players.length <= 6 && !players.includes(player.name) ) {
+                    && Object.keys(players).length <= 6 && !Object.keys(players).includes(player.name) ) {
+                        // debugger
                     d3.select(".searchresults")
                         .append("li")
                         .attr("class", "playeroption")
@@ -84,9 +85,11 @@ function playerMenu(searchText) {
                             loadPlayerGames(playerName);
 
                             displayGameBreakdownButton(playerName);
+
+                            displayPlayerTeam(players[player.name]);
                         })
 
-                    players.push(player.name);
+                    players[player.name] = player.team_name;
                 }
             });
         });
@@ -98,12 +101,20 @@ function loadPlayerGames(player) {
             const games = {};
             data.forEach(shot => {
                 if(shot.name.toLowerCase() === player.toLowerCase() && games[shot.game_date] === undefined) {
-                    games[shot.game_date] = shot.opponent;
+                    games[shot.game_date] = [];
+                    games[shot.game_date].push(shot.opponent);
+                    games[shot.game_date].push(shot.team_name);
                 }
             });
             displayPlayerGames(games);
             displayAllGamesButton(player);
         });
+}
+
+function displayPlayerTeam(team) {
+    d3.select(".team h3").remove();
+
+    d3.select(".team").append("h3").text(`Team: ${team}`)
 }
 
 function displayAllGamesButton(playerName) {
@@ -132,8 +143,10 @@ function displayPlayerGames(games) {
     const activeClass = "selectedgame";
 
     Object.keys(allGames).forEach( (date) => {
-        const opp = allGames[date].split(" ");
-        const teamName = opp[opp.length - 1]; 
+        const opp = allGames[date][0].split(" ");
+        const oppTeamName = opp[opp.length - 1];
+        
+        const teamName = allGames[date][1];
 
         d3.select(".search").text("Search by Game")
 
@@ -142,12 +155,13 @@ function displayPlayerGames(games) {
             .text(date)
             .append("img")
             .attr("class", "teamLogo")
-            .property("src", `../assets/${teamName}.png`)
+            .property("src", `../assets/${oppTeamName}.png`)
             .on("click", function (d, i) {
                 const playerName = d3.select(".searchfield")._groups[0][0].placeholder;
                 const date = d3.event.target.parentElement.textContent;
                 drawChart(playerName, date);
                 displayQuarterButtons(playerName, date);
+                displayPlayerTeam(teamName);
 
                 const alreadyIsActive = d3.select(this).classed(activeClass);
 
@@ -180,6 +194,11 @@ function clearPies() {
     d3.selectAll("#svgcontainer svg").remove();
 }
 
+function getTeamname() {
+    const teamName = d3.select(".team h3")._groups[0][0].textContent.split(" ");
+    return teamName.slice(1,teamName.length).join(" ");
+}
+
 function displayGameBreakdownButton(playerName, teamName, quarter) {
     d3.selectAll(".breakdownbutton").remove();
 
@@ -210,17 +229,15 @@ function displayGameBreakdownButton(playerName, teamName, quarter) {
             const pieDistance = new Pie(svg, playerName);
             pieDistance.shotDistanceStats();
 
+            const teamName = getTeamname();
+
             // indiv v.s team shots
-
-            // INCLUDE THE TEAM NAME  
             const indivTeam = new Pie(svg, playerName);
-            indivTeam.indivTeamStats("Cavaliers");
-
-            // INCLUDE THE TEAM NAME  
+            indivTeam.indivTeamStats(teamName);
 
             // indiv v.s. team made shots 
             const indivMadeTeam = new Pie(svg, playerName);
-            indivMadeTeam.madeTeamStats("Cavaliers");
+            indivMadeTeam.madeTeamStats(teamName);
         })
 }
 

@@ -152,34 +152,34 @@ class Pie {
         const that = this;
         d3.csv(CONSTANTS.CSV).then(function (data) {
             const distanceStats = [
-                { name: "0-10 ft", value: 0 },
-                { name: "11-20 ft", value: 0 },
-                { name: "21-30 ft", value: 0 },
-                { name: "31-40 ft", value: 0 },
-                { name: "41-50 ft", value: 0 },
-                { name: "51-60 ft", value: 0 },
+                { name: "0-5 ft", value: 0 },
+                { name: "6-10 ft", value: 0 },
+                { name: "11-15 ft", value: 0 },
+                { name: "16-20 ft", value: 0 },
+                { name: "21-25 ft", value: 0 },
+                { name: "26-30 ft", value: 0 },
             ];
 
             data.forEach((shot) => {
                 if (shot.name.toLowerCase() === that.playerName.toLowerCase()) {
                     const dist = parseInt(shot.shot_distance);
                     switch (true) {
-                        case dist <= 10:
+                        case dist <= 5:
                             distanceStats[0].value += 1;
                             break;
-                        case dist >= 11 && dist <= 20:
+                        case dist >= 6 && dist <= 10:
                             distanceStats[1].value += 1;
                             break;
-                        case dist >=21 && dist <= 30:
+                        case dist >= 11 && dist <= 15:
                             distanceStats[2].value += 1;
                             break;
-                        case dist >= 31 && dist <= 40:
+                        case dist >= 16 && dist <= 20:
                             distanceStats[3].value += 1;
                             break;
-                        case dist >= 41 && dist <= 50:
+                        case dist >= 21 && dist <= 25:
                             distanceStats[4].value += 1;
                             break;
-                        case dist >= 51 && dist <= 60:
+                        case dist >= 26 && dist <= 30:
                             distanceStats[5].value += 1;
                             break;
                     }
@@ -191,7 +191,7 @@ class Pie {
 
     render(data, label) {
         const radius = Math.min(CONSTANTS.WIDTH, CONSTANTS.HEIGHT) / 2
-        let arc = d3.arc().innerRadius(radius * 0.6).outerRadius(radius - 1);
+        let arc = d3.arc().innerRadius(radius * 0.53).outerRadius(radius - 1);
 
         const pie = d3.pie().padAngle(0.005).sort(null).value(d => d.value)
         
@@ -213,16 +213,6 @@ class Pie {
             .join("path")
             .attr("fill", d => color(d.data.name))
             .attr("fill-opacity", 0.75)
-            .transition().delay(function (d, i) {
-                return i * 600;
-            }).duration(600)
-            .attrTween('d', function (d) {
-                const i = d3.interpolate(d.startAngle + 0.1, d.endAngle);
-                return function (t) {
-                    d.endAngle = i(t);
-                    return arc(d)
-                }
-            })
         
         svg.selectAll("path")
             .data(arcs)
@@ -230,7 +220,6 @@ class Pie {
             .attr("d", arc)
             .append("title")
             .text(d => `${d.data.name}: ${d.data.value.toLocaleString()}`)
-            
 
         svg.append("g")
             .attr("font-family", "Oswald")

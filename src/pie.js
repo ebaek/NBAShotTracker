@@ -33,45 +33,49 @@ class Pie {
         const that = this;
 
         d3.csv(CONSTANTS.CSV).then(function (data) {
+            // dunk/ layup
+            // jumpshots
+            // hooks
+
+            // const shotActionsList = [
+            //     {name: "Alley Oop Dunk", value: 0},
+            //     {name: "Alley Oop Layup", value: 0},
+            //     {name: "Driving Bank Hook", value: 0},
+            //     {name: "Driving Dunk", value: 0},
+            //     {name: "Driving Finger Roll Layup", value: 0},
+            //     {name: "Driving Hook", value: 0},
+            //     {name: "Driving Layup", value: 0},
+            //     {name: "Driving Reverse Layup", value: 0},
+            //     {name: "Driving Slam Dunk", value: 0},
+            //     {name: "Dunk", value: 0},
+            //     {name: "Fadeaway Bank", value: 0},
+            //     {name: "Fadeaway Jump", value: 0},
+            //     {name: "Finger Roll Layup Shot", value: 0},
+            //     {name: "Floating Jump", value: 0},
+            //     {name: "Hook Bank", value: 0},
+            //     {name: "Hook Shot", value: 0},
+            //     {name: "Jump Bank Hook", value: 0},
+            //     {name: "Jump Bank", value: 0},
+            //     {name: "Jump Shot", value: 0}];
+
             const shotActionsList = [
-                {name: "Alley Oop Dunk", value: 0},
-                {name: "Alley Oop Layup", value: 0},
-                {name: "Driving Bank Hook", value: 0},
-                {name: "Driving Dunk", value: 0},
-                {name: "Driving Finger Roll Layup", value: 0},
-                {name: "Driving Hook", value: 0},
-                {name: "Driving Layup", value: 0},
-                {name: "Driving Reverse Layup", value: 0},
-                {name: "Driving Slam Dunk", value: 0},
-                {name: "Dunk", value: 0},
-                {name: "Fadeaway Bank", value: 0},
-                {name: "Fadeaway Jump", value: 0},
-                {name: "Finger Roll Layup Shot", value: 0},
-                {name: "Floating Jump", value: 0},
-                {name: "Hook Bank", value: 0},
-                {name: "Hook Shot", value: 0},
-                {name: "Jump Bank Hook", value: 0},
-                {name: "Jump Bank", value: 0},
-                {name: "Jump Shot", value: 0}];
+                {name: "Dunk/ Layup", value: 0},
+                {name: "Jumpshot", value: 0},
+            ]
 
             data.forEach( (shot) => {
                 if (shot.name.toLowerCase() === that.playerName.toLowerCase()) {
-                    const shotType = shot.action_type.split(" ");
-                    
-                    if(shotType.length > 2 && shotType[shotType.length - 1].toLowerCase() === "shot") shotType.pop();
+                    const shotAction = shot.action_type.toLowerCase();
 
-                    for(let i = 0; i < shotActionsList.length; i++) {
-                        if(shotActionsList[i]["name"] === shotType.join(" ")) shotActionsList[i]["value"] += 1;
+                    if(shotAction.includes("dunk") || shotAction.includes("layup") || shotAction.includes("hook")) {
+                        shotActionsList[0].value += 1;
+                    } else if (shotAction.includes("jump")) {
+                        shotActionsList[1].value += 1;
                     }
                 }
             })
 
-            const newStats = [];
-            for (let i = 0; i < shotActionsList.length; i++) {
-                if (shotActionsList[i].value > 0) newStats.push(shotActionsList[i])
-            }
-
-            return newStats;
+            return shotActionsList;
             
         }).then((stats) => { this.render(stats, "Shot Type"); });
     }

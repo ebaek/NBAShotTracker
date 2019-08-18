@@ -278,5 +278,9 @@ footer {
     width: 30px;
 }
 
+.personal-div a img:hover {
+    filter: hue-rotate(180deg);
+}
+
 
 

@@ -67,7 +67,6 @@ function playerMenu(searchText) {
             data.forEach(player => {
                 if ( player.name.slice(0, searchLength).toLowerCase() === searchText.toLowerCase() 
                     && Object.keys(players).length <= 6 && !Object.keys(players).includes(player.name) ) {
-                        // debugger
                     d3.select(".searchresults")
                         .append("li")
                         .attr("class", "playeroption")

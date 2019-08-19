@@ -15,7 +15,13 @@
   * The NBA Shot Tracker renders an animation of an individual player's shot performance. Users can 
   filter the data by game (game date), quarter, and defending team from the 2010-2017 seasons. Users can also 
   compare the indivial player's performance against various metrics includings (field goal attempts v.s. team (FGA), field 
-  goals made v.s. team (FGM), distance, shot- type, and more.       
+  goals made v.s. team (FGM), distance, shot- type, and more.
+  
+## Architecture and Technologies
+  * Vanilla Javascript for overall structure and create an interactive menu 
+  * D3 library (d3-hex) to render basketball court and shots taken
+  * R to sort the csv files 
+  * Webpack to bundle scripts into a single source
 
 ## MVP Features
   ### Basketball Court: 
@@ -109,12 +115,6 @@
     ```
     
    ![season shot breakdown pie charts with 6 metrics](screenshots/seasonbreakdown.png)
-
-## Architecture and Technologies
-  * Vanilla Javascript for overall structure and create an interactive menu 
-  * D3 library (d3-hex) to render basketball court and shots taken
-  * R to sort the csv files 
-  * Webpack to bundle scripts into a single source
   
 ## Wireframe
 ![Wireframe of the basketball tracker](screenshots/wireframe.jpg)

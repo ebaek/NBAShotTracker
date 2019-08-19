@@ -15,7 +15,41 @@ document.addEventListener("DOMContentLoaded", () => {
     searchfield.oninput = (event) => {
         event.target.value === "" ? clearPlayerMenuResults() : debounceSearch(event);
     };
+
+    randomButton();    
 });
+
+function randomButton() {
+    const min = 2010;
+    const max = 2017;
+    const season = Math.floor(Math.random() * (max - min + 1)) + min;
+
+    d3.selectAll(".lucky")
+        .append("input")
+        .property("type", "button")
+        .attr("class", "randombutton")
+        .attr("value", "I'm Feeling Lucky")
+        .on("click", function(d, i) {
+            d3.csv(`./dataset/${season.toString()}.csv`)
+                .then(function (data) {
+                    const player = data[Math.floor(Math.random() * data.length)];
+                    const playerName = player.name;
+                    const playerTeam = player.team_name;
+
+                    drawChart(playerName, season);
+                    loadPlayerGames(playerName, season);
+                    displayGameBreakdownButton(playerName, season);
+
+                    displayPlayerTeam(playerTeam);
+                    displaySeasonSelector();
+                    
+                    d3.selectAll(".searchfield").classed("initial", false);
+                    d3.selectAll(".searchfield").property("placeholder", playerName)
+
+                    d3.selectAll(".lucky").remove();
+                })
+        })
+}
 
 const debounce = (func, delay) => {    
     let timeoutId;
@@ -44,7 +78,6 @@ export function drawChart(playerName, season, date, period) {
     court.render();
 
     new Shots(svg, playerName, season, date, period);
-
 }
 
 function clearPlayerMenuResults() {
@@ -88,7 +121,6 @@ function playerMenu(searchText, season) {
                             
                             drawChart(playerName, season);
                             loadPlayerGames(playerName, season);
-
                             displayGameBreakdownButton(playerName, season);
 
                             displayPlayerTeam(players[player.name]);

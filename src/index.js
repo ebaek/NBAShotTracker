@@ -114,9 +114,11 @@ function loadPlayerGames(player, season) {
 }
 
 function displayPlayerTeam(team) {
-    d3.select(".team h3").remove();
+    d3.selectAll(".teamseason h3").remove();
 
-    d3.select(".team").append("h3").text(`Team: ${team}`)
+    d3.select(".teamseason").append("h3").text(`Team: ${team}`)
+    d3.select(".teamseason").append("h3").text(`Search by Season`).classed("seasonlabel")
+
 }
 
 function displayAllGamesButton(playerName, season) {
@@ -142,6 +144,7 @@ function displayAllGamesButton(playerName, season) {
 
 function displayPlayerGames(games, season) {
     d3.selectAll(".games li").remove();
+    d3.selectAll(".search h3").remove();
 
     const allGames = games;
     const activeClass = "selectedgame";
@@ -201,6 +204,7 @@ function clearPies() {
 
 function displaySeasonSelector() {
     d3.select(".seasonselect-div select").remove();
+    d3.select(".seasonlabel").remove();
 
     d3.select(".seasonselect-div").append("select");
 
@@ -225,7 +229,7 @@ function displaySeasonSelector() {
 }
 
 function getTeamname() {
-    const teamName = d3.select(".team h3")._groups[0][0].textContent.split(" ");
+    const teamName = d3.select(".teamseason h3")._groups[0][0].textContent.split(" ");
     return teamName.slice(1,teamName.length).join(" ");
 }
 

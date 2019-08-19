@@ -10,7 +10,7 @@ class Pie {
         this.playerName = playerName;
     }
 
-    madeMissedStats(timeline, season) {
+    madeMissedStats(season) {
         const that = this;
 
         d3.csv(`./dataset/${season}.csv`).then( function(data) {

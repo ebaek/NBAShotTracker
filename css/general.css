@@ -220,7 +220,7 @@ input::placeholder {
     justify-content: center;
     align-items: center; 
     width: 100%;
-    height: 72px;
+    height: 80px;
     flex-direction: column;
 }
 
@@ -232,7 +232,7 @@ input::placeholder {
     color: rgba(213, 213, 213, 0.461);
     font-family: 'Oswald', sans-serif;
     margin-top: 4.5%;
-    margin-bottom: 0;
+    margin-bottom: 1%;
     padding: 0;
 }
 

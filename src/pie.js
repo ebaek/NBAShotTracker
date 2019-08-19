@@ -8,14 +8,12 @@ class Pie {
     constructor(svg, playerName, season) {
         this.svg = svg;
         this.playerName = playerName;
-
-        this.csv = `./dataset/${season}.csv`;
     }
 
-    madeMissedStats(timeline) {
+    madeMissedStats(timeline, season) {
         const that = this;
 
-        d3.csv(this.csv).then( function(data) {
+        d3.csv(`./dataset/${season}.csv`).then( function(data) {
             const madeMissed = [
                 { name: "Made", value: 0 }, 
                 { name: "Missed", value: 0 }];
@@ -30,10 +28,10 @@ class Pie {
         }).then((stats) => { this.render(stats, "FG"); });
     }
 
-    shotActionStats() {
+    shotActionStats(season) {
         const that = this;
 
-        d3.csv(this.csv).then(function (data) {
+        d3.csv(`./dataset/${season}.csv`).then(function (data) {
             const shotActionsList = [
                 {name: "Dunk/ Layup", value: 0},
                 {name: "Jumpshot", value: 0},
@@ -56,10 +54,10 @@ class Pie {
         }).then((stats) => { this.render(stats, "Shot Type"); });
     }
 
-    indivTeamStats(teamName) {
+    indivTeamStats(teamName, season) {
         const that = this;
 
-        d3.csv(this.csv).then(function (data) {
+        d3.csv(`./dataset/${season}.csv`).then(function (data) {
             const indivTeam = [
                 { name: "Individual", value: 0 },
                 { name: "Team", value: 0 }];
@@ -75,10 +73,10 @@ class Pie {
         }).then((stats) => { this.render(stats, "FGA vs Team"); });
     }
 
-    madeTeamStats(teamName) {
+    madeTeamStats(teamName, season) {
         const that = this;
 
-        d3.csv(this.csv).then(function (data) {
+        d3.csv(`./dataset/${season}.csv`).then(function (data) {
             const indivTeam = [
                 { name: "Individual", value: 0 },
                 { name: "Team", value: 0 }];
@@ -94,10 +92,10 @@ class Pie {
         }).then((stats) => { this.render(stats, "FGM vs Team"); });
     }
 
-    shotQuarterStats() {
+    shotQuarterStats(season) {
         const that = this;
 
-        d3.csv(this.csv).then(function (data) {
+        d3.csv(`./dataset/${season}.csv`).then(function (data) {
             const quarterStats = [
                 { name: "Q1", value: 0 },
                 { name: "Q2", value: 0 },
@@ -128,9 +126,9 @@ class Pie {
         }).then((stats) => { this.render(stats, "By Quarter") });
     }
 
-    shotDistanceStats() {
+    shotDistanceStats(season) {
         const that = this;
-        d3.csv(this.csv).then(function (data) {
+        d3.csv(`./dataset/${season}.csv`).then(function (data) {
             const distanceStats = [
                 { name: "0-5 ft", value: 0 },
                 { name: "6-10 ft", value: 0 },

@@ -248,30 +248,30 @@ function displayGameBreakdownButton(playerName, season) {
             const svg = d3.select("svg");
 
             // made shots
-            const pieMade = new Pie(svg, playerName, season);
-            pieMade.madeMissedStats();
+            const pieMade = new Pie(svg, playerName);
+            pieMade.madeMissedStats(season);
 
             // action type
-            const pieAction = new Pie(svg, playerName, season);
-            pieAction.shotActionStats();
+            const pieAction = new Pie(svg, playerName);
+            pieAction.shotActionStats(season);
 
             // shots by quarter 
-            const pieQuarter = new Pie(svg, playerName, season);
-            pieQuarter.shotQuarterStats();
+            const pieQuarter = new Pie(svg, playerName);
+            pieQuarter.shotQuarterStats(season);
 
             // shots by distance
-            const pieDistance = new Pie(svg, playerName, season);
-            pieDistance.shotDistanceStats();
+            const pieDistance = new Pie(svg, playerName);
+            pieDistance.shotDistanceStats(season);
 
             const teamName = getTeamname();
 
             // indiv v.s team shots
-            const indivTeam = new Pie(svg, playerName, season);
-            indivTeam.indivTeamStats(teamName);
+            const indivTeam = new Pie(svg, playerName);
+            indivTeam.indivTeamStats(teamName, season);
 
             // indiv v.s. team made shots 
-            const indivMadeTeam = new Pie(svg, playerName, season);
-            indivMadeTeam.madeTeamStats(teamName);
+            const indivMadeTeam = new Pie(svg, playerName);
+            indivMadeTeam.madeTeamStats(teamName, season);
         })
 }
 

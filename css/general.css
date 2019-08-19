@@ -317,6 +317,8 @@ input::placeholder {
 }
 
 .quarters input {
+    margin-left: 1%;
+    margin-right: 1%;
     box-sizing: border-box;
     width: 50px;
     height: 20px;

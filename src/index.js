@@ -92,7 +92,6 @@ function clearSearch(playerName) {
 }
 
 function playerMenu(searchText, season) {
-    d3.selectAll(".lucky").remove();
     clearPlayerMenuResults();
 
     d3.csv(`./dataset/${season}.csv`)
@@ -127,6 +126,8 @@ function playerMenu(searchText, season) {
 
                             displayPlayerTeam(players[player.name]);
                             displaySeasonSelector();
+
+                            d3.selectAll(".lucky").remove();
                         })
 
                     players[player.name] = player.team_name;

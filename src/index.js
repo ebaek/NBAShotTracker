@@ -79,6 +79,7 @@ function playerMenu(searchText, season) {
                         .on("click", function (d, i) {
                             d3.selectAll(".searchfield").classed("initial", false);
                             d3.selectAll(".searchresults").classed("initialresults", false);
+                            d3.selectAll(".quarters input").classed("qactive", false);
 
                             const playerName = d3.event.target.textContent;
                             clearSearch(playerName);
@@ -91,7 +92,6 @@ function playerMenu(searchText, season) {
                             displayGameBreakdownButton(playerName, season);
 
                             displayPlayerTeam(players[player.name]);
-
                             displaySeasonSelector();
                         })
 
@@ -164,6 +164,9 @@ function sideScroll(element, direction, speed, distance, step) {
 function displayPlayerGames(games, season) {
     d3.selectAll(".games li").remove();
     d3.selectAll(".search h3").remove();
+    d3.selectAll(".leftarrow").remove();
+    d3.selectAll(".rightarrow").remove();
+
 
     const allGames = games;
     const activeClass = "selectedgame";
@@ -204,7 +207,9 @@ function displayPlayerGames(games, season) {
                 const alreadyIsActive = d3.select(this).classed(activeClass);
 
                 d3.selectAll(".games li").classed(activeClass, false);
+
                 d3.selectAll(".breakdownbutton").classed("qactive", false);
+                d3.selectAll(".quarters input").classed("qactive", false);
 
                 d3.select(this.parentElement).classed(activeClass, !alreadyIsActive);
             })

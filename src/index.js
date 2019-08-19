@@ -66,8 +66,12 @@ function playerMenu(searchText, season) {
             let players = {};
 
             data.forEach(player => {
-                if ( player.name.slice(0, searchLength).toLowerCase() === searchText.toLowerCase() 
+                const fullName = player.name.split(" ")
+                const lastName = fullName[fullName.length - 1];
+                if ( (player.name.slice(0, searchLength).toLowerCase() === searchText.toLowerCase()
+                    || lastName.slice(0, searchLength).toLowerCase() === searchText.toLowerCase())
                     && Object.keys(players).length <= 6 && !Object.keys(players).includes(player.name) ) {
+
                     d3.select(".searchresults")
                         .append("li")
                         .attr("class", "playeroption")
@@ -132,13 +136,17 @@ function displayAllGamesButton(playerName, season) {
         .property("value", `All ${season} Games`)
         .attr("class", "allshotsbutton")
         .on("click", function (d, i) {
+            clearPies();
             drawChart(playerName, season);
 
             const alreadyIsActive = d3.select(this).classed(activeClass);
 
-            d3.selectAll(".quarters input").classed(activeClass, false);
+            d3.selectAll(".quarters input").remove();
+            d3.selectAll(".games li").classed("selectedgame", false);
+            d3.selectAll(".breakdownbutton").classed("qactive", false);
 
             d3.select(this).classed(activeClass, !alreadyIsActive);
+
         })
 }
 
@@ -185,6 +193,7 @@ function displayPlayerGames(games, season) {
             .attr("class", "teamLogo")
             .property("src", `./assets/${oppTeamName}.png`)
             .on("click", function (d, i) {
+
                 const playerName = d3.select(".searchfield")._groups[0][0].placeholder;
                 const date = d3.event.target.parentElement.textContent;
 
@@ -195,6 +204,7 @@ function displayPlayerGames(games, season) {
                 const alreadyIsActive = d3.select(this).classed(activeClass);
 
                 d3.selectAll(".games li").classed(activeClass, false);
+                d3.selectAll(".breakdownbutton").classed("qactive", false);
 
                 d3.select(this.parentElement).classed(activeClass, !alreadyIsActive);
             })
@@ -229,7 +239,7 @@ function displayQuarterButtons(playerName, season, date) {
     new Qbutton(playerName, season, date);
 }
 
-function clearPies() {
+export function clearPies() {
     d3.selectAll("#svgcontainer svg").remove();
 }
 
@@ -303,6 +313,15 @@ function displayGameBreakdownButton(playerName, season) {
             // indiv v.s. team made shots 
             const indivMadeTeam = new Pie(svg, playerName);
             indivMadeTeam.madeTeamStats(teamName, season);
+
+            const activeClass = "qactive";
+            const alreadyIsActive = d3.select(this).classed(activeClass);
+
+            d3.selectAll(".quarters input").classed(activeClass, false);
+            d3.selectAll(".allshotsbutton").classed(activeClass, false);
+
+            d3.selectAll(".games li").classed("selectedgame", false);
+            d3.select(this).classed(activeClass, !alreadyIsActive);
         })
 }
 

@@ -1,4 +1,4 @@
-import { drawChart } from './index';
+import { drawChart, clearPies } from './index';
 
 class Qbutton {
     constructor(playerName, season, date, quarter) {
@@ -11,6 +11,8 @@ class Qbutton {
             .property("type", "button")
             .property("value", label)
             .on("click", function (d, i) {
+                clearPies();
+
                 const alreadyIsActive = d3.select(this).classed(activeClass);
 
                 d3.selectAll(".quarters input").classed(activeClass, false);

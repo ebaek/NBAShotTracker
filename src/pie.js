@@ -2,19 +2,21 @@ const CONSTANTS = {
     WIDTH: 200,
     HEIGHT: 200,
     MARGIN: 40,
-    CSV: "../dataset/dataset.csv",
+    // CSV: "../dataset/dataset.csv",
 }
 
 class Pie {
-    constructor(svg, playerName) {
+    constructor(svg, playerName, season) {
         this.svg = svg;
         this.playerName = playerName;
+
+        this.csv = `../dataset/${season}.csv`;
     }
 
     madeMissedStats(timeline) {
         const that = this;
 
-        d3.csv(CONSTANTS.CSV).then( function(data) {
+        d3.csv(this.csv).then( function(data) {
             const madeMissed = [
                 { name: "Made", value: 0 }, 
                 { name: "Missed", value: 0 }];
@@ -32,32 +34,7 @@ class Pie {
     shotActionStats() {
         const that = this;
 
-        d3.csv(CONSTANTS.CSV).then(function (data) {
-            // dunk/ layup
-            // jumpshots
-            // hooks
-
-            // const shotActionsList = [
-            //     {name: "Alley Oop Dunk", value: 0},
-            //     {name: "Alley Oop Layup", value: 0},
-            //     {name: "Driving Bank Hook", value: 0},
-            //     {name: "Driving Dunk", value: 0},
-            //     {name: "Driving Finger Roll Layup", value: 0},
-            //     {name: "Driving Hook", value: 0},
-            //     {name: "Driving Layup", value: 0},
-            //     {name: "Driving Reverse Layup", value: 0},
-            //     {name: "Driving Slam Dunk", value: 0},
-            //     {name: "Dunk", value: 0},
-            //     {name: "Fadeaway Bank", value: 0},
-            //     {name: "Fadeaway Jump", value: 0},
-            //     {name: "Finger Roll Layup Shot", value: 0},
-            //     {name: "Floating Jump", value: 0},
-            //     {name: "Hook Bank", value: 0},
-            //     {name: "Hook Shot", value: 0},
-            //     {name: "Jump Bank Hook", value: 0},
-            //     {name: "Jump Bank", value: 0},
-            //     {name: "Jump Shot", value: 0}];
-
+        d3.csv(this.csv).then(function (data) {
             const shotActionsList = [
                 {name: "Dunk/ Layup", value: 0},
                 {name: "Jumpshot", value: 0},
@@ -83,7 +60,7 @@ class Pie {
     indivTeamStats(teamName) {
         const that = this;
 
-        d3.csv(CONSTANTS.CSV).then(function (data) {
+        d3.csv(this.csv).then(function (data) {
             const indivTeam = [
                 { name: "Individual", value: 0 },
                 { name: "Team", value: 0 }];
@@ -102,7 +79,7 @@ class Pie {
     madeTeamStats(teamName) {
         const that = this;
 
-        d3.csv(CONSTANTS.CSV).then(function (data) {
+        d3.csv(this.csv).then(function (data) {
             const indivTeam = [
                 { name: "Individual", value: 0 },
                 { name: "Team", value: 0 }];
@@ -121,7 +98,7 @@ class Pie {
     shotQuarterStats() {
         const that = this;
 
-        d3.csv(CONSTANTS.CSV).then(function (data) {
+        d3.csv(this.csv).then(function (data) {
             const quarterStats = [
                 { name: "Q1", value: 0 },
                 { name: "Q2", value: 0 },
@@ -149,12 +126,12 @@ class Pie {
             });
 
             return quarterStats;
-        }).then((stats) => { this.render(stats, "By Quarter"); });
+        }).then((stats) => { this.render(stats, "By Quarter") });
     }
 
     shotDistanceStats() {
         const that = this;
-        d3.csv(CONSTANTS.CSV).then(function (data) {
+        d3.csv(this.csv).then(function (data) {
             const distanceStats = [
                 { name: "0-5 ft", value: 0 },
                 { name: "6-10 ft", value: 0 },

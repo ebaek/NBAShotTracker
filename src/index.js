@@ -6,6 +6,7 @@ import Pie from './pie';
 const CONSTANTS = {
     courtWidth: 500,
     courtHeight: 470,
+    defaultSeason: "2017"
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -26,13 +27,13 @@ const debounce = (func, delay) => {
     }
 }
 
-const debounceSearch = debounce((event) => playerMenu(event), 300);
+const debounceSearch = debounce((event) => playerMenu(event, CONSTANTS.defaultSeason), 300);
 
 export function clearChart() {
     d3.select("svg").remove();
 }
 
-export function drawChart(playerName, date, period) {    
+export function drawChart(playerName, season, date, period) {    
     clearChart();
     clearPies();
 
@@ -42,7 +43,7 @@ export function drawChart(playerName, date, period) {
     const court = new Court(svg);
     court.render();
 
-    new Shots(svg, playerName, date, period);
+    new Shots(svg, playerName, season, date, period);
 
 }
 
@@ -56,10 +57,10 @@ function clearSearch(playerName) {
         .property("placeholder", playerName)
 }
 
-function playerMenu(searchText) {
+function playerMenu(searchText, season) {
     clearPlayerMenuResults();
 
-    d3.csv("../dataset/dataset.csv")
+    d3.csv(`../dataset/${season}.csv`)
         .then(function (data) {
             const searchLength = searchText.length;
             let players = {};
@@ -80,12 +81,14 @@ function playerMenu(searchText) {
                             clearPlayerMenuResults();
                             clearPlayerGames();
                             
-                            drawChart(playerName);
-                            loadPlayerGames(playerName);
+                            drawChart(playerName, season);
+                            loadPlayerGames(playerName, season);
 
-                            displayGameBreakdownButton(playerName);
+                            displayGameBreakdownButton(playerName, season);
 
                             displayPlayerTeam(players[player.name]);
+
+                            displaySeasonSelector();
                         })
 
                     players[player.name] = player.team_name;
@@ -94,8 +97,8 @@ function playerMenu(searchText) {
         });
 }
 
-function loadPlayerGames(player) {
-    d3.csv("../dataset/dataset.csv")
+function loadPlayerGames(player, season) {
+    d3.csv(`../dataset/${season}.csv`)
         .then(function (data) {
             const games = {};
             data.forEach(shot => {
@@ -105,8 +108,8 @@ function loadPlayerGames(player) {
                     games[shot.game_date].push(shot.team_name);
                 }
             });
-            displayPlayerGames(games);
-            displayAllGamesButton(player);
+            displayPlayerGames(games, season);
+            displayAllGamesButton(player, season);
         });
 }
 
@@ -116,7 +119,7 @@ function displayPlayerTeam(team) {
     d3.select(".team").append("h3").text(`Team: ${team}`)
 }
 
-function displayAllGamesButton(playerName) {
+function displayAllGamesButton(playerName, season) {
     d3.select(".allshotsbutton").remove();
 
     const activeClass = "qactive";
@@ -127,7 +130,7 @@ function displayAllGamesButton(playerName) {
         .property("value", "All Games")
         .attr("class", "allshotsbutton")
         .on("click", function (d, i) {
-            drawChart(playerName);
+            drawChart(playerName, season);
 
             const alreadyIsActive = d3.select(this).classed(activeClass);
 
@@ -137,7 +140,9 @@ function displayAllGamesButton(playerName) {
         })
 }
 
-function displayPlayerGames(games) {
+function displayPlayerGames(games, season) {
+    d3.selectAll(".games li").remove();
+
     const allGames = games;
     const activeClass = "selectedgame";
 
@@ -158,8 +163,9 @@ function displayPlayerGames(games) {
             .on("click", function (d, i) {
                 const playerName = d3.select(".searchfield")._groups[0][0].placeholder;
                 const date = d3.event.target.parentElement.textContent;
-                drawChart(playerName, date);
-                displayQuarterButtons(playerName, date);
+
+                drawChart(playerName, season, date);
+                displayQuarterButtons(playerName, season, date);
                 displayPlayerTeam(teamName);
 
                 const alreadyIsActive = d3.select(this).classed(activeClass);
@@ -175,22 +181,47 @@ function clearPlayerGames() {
     d3.selectAll(".games li").remove();
 }
 
-function displayQuarterButtons(playerName, date) {
+function displayQuarterButtons(playerName, season, date) {
     d3.selectAll(".quarters input").remove();
 
     // all quarter buttons
     for(let i = 1; i < 5; i++) {
         const qNum = i;
         const quarter = "Q" + qNum.toString();
-        new Qbutton(playerName, date, quarter);
+        new Qbutton(playerName, season, date, quarter);
     }
 
     // E 
-    new Qbutton(playerName, date);
+    new Qbutton(playerName, season, date);
 }
 
 function clearPies() {
     d3.selectAll("#svgcontainer svg").remove();
+}
+
+function displaySeasonSelector() {
+    d3.select(".seasonselect-div select").remove();
+
+    d3.select(".seasonselect-div").append("select");
+
+    for(let i = 2018; i >= 2010; i--) {
+        d3.select(".seasonselect-div select")
+            .append("option")
+            .property("value", `${i}`)
+            .attr("label", `${i}`)
+    }
+    const activeClass = "qactive";
+
+    d3.select(".seasonselect-div select")
+        .on("change", function (d, i) {
+            const playerName = d3.select(".searchfield")._groups[0][0].placeholder;
+            const season = d3.event.target.value;
+            drawChart(playerName, season)
+            displayGameBreakdownButton(playerName, season);
+            loadPlayerGames(playerName, season);
+
+            d3.selectAll(".quarters input").classed(activeClass, false);
+        })
 }
 
 function getTeamname() {
@@ -198,7 +229,7 @@ function getTeamname() {
     return teamName.slice(1,teamName.length).join(" ");
 }
 
-function displayGameBreakdownButton(playerName, teamName, quarter) {
+function displayGameBreakdownButton(playerName, season) {
     d3.selectAll(".breakdownbutton").remove();
 
     d3.select(".breakdown-div")
@@ -213,29 +244,29 @@ function displayGameBreakdownButton(playerName, teamName, quarter) {
             const svg = d3.select("svg");
 
             // made shots
-            const pieMade = new Pie(svg, playerName);
+            const pieMade = new Pie(svg, playerName, season);
             pieMade.madeMissedStats();
 
             // action type
-            const pieAction = new Pie(svg, playerName);
+            const pieAction = new Pie(svg, playerName, season);
             pieAction.shotActionStats();
 
             // shots by quarter 
-            const pieQuarter = new Pie(svg, playerName);
+            const pieQuarter = new Pie(svg, playerName, season);
             pieQuarter.shotQuarterStats();
 
             // shots by distance
-            const pieDistance = new Pie(svg, playerName);
+            const pieDistance = new Pie(svg, playerName, season);
             pieDistance.shotDistanceStats();
 
             const teamName = getTeamname();
 
             // indiv v.s team shots
-            const indivTeam = new Pie(svg, playerName);
+            const indivTeam = new Pie(svg, playerName, season);
             indivTeam.indivTeamStats(teamName);
 
             // indiv v.s. team made shots 
-            const indivMadeTeam = new Pie(svg, playerName);
+            const indivMadeTeam = new Pie(svg, playerName, season);
             indivMadeTeam.madeTeamStats(teamName);
         })
 }

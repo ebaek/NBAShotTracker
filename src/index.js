@@ -41,8 +41,8 @@ function randomButton() {
                     displayGameBreakdownButton(playerName, season);
 
                     displayPlayerTeam(playerTeam);
-                    displaySeasonSelector();
-                    
+                    displaySeasonSelector(season);
+
                     d3.selectAll(".searchfield").classed("initial", false);
                     d3.selectAll(".searchresults").classed("initialresults", false);
                     d3.selectAll(".searchfield").property("placeholder", playerName);
@@ -283,17 +283,26 @@ export function clearPies() {
     d3.selectAll("#svgcontainer svg").remove();
 }
 
-function displaySeasonSelector() {
+function displaySeasonSelector(selectedOption = 2018) {
     d3.select(".seasonselect-div select").remove();
     d3.select(".seasonlabel").remove();
 
     d3.select(".seasonselect-div").append("select");
 
     for(let i = 2018; i >= 2010; i--) {
-        d3.select(".seasonselect-div select")
-            .append("option")
-            .property("value", `${i}`)
-            .attr("label", `${i}`)
+        if(i === selectedOption) {
+            d3.select(".seasonselect-div select")
+                .append("option")
+                .attr("selected", true)
+                .property("value", `${i}`)
+                .attr("label", `${i}`)
+        } else {
+            d3.select(".seasonselect-div select")
+                .append("option")
+                .property("value", `${i}`)
+                .attr("label", `${i}`)
+        }
+        
     }
     const activeClass = "qactive";
 

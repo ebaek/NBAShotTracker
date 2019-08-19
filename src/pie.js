@@ -5,7 +5,7 @@ const CONSTANTS = {
 }
 
 class Pie {
-    constructor(svg, playerName, season) {
+    constructor(svg, playerName) {
         this.svg = svg;
         this.playerName = playerName;
     }

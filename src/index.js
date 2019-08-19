@@ -129,7 +129,7 @@ function displayAllGamesButton(playerName, season) {
     d3.select(".allbutton-div")
         .append("input")
         .property("type", "button")
-        .property("value", "All Games")
+        .property("value", `All ${season} Games`)
         .attr("class", "allshotsbutton")
         .on("click", function (d, i) {
             drawChart(playerName, season);
@@ -239,7 +239,7 @@ function displayGameBreakdownButton(playerName, season) {
     d3.select(".breakdown-div")
         .append("input")
         .property("type", "button")
-        .property("value", "Season Shot Breakdown")
+        .property("value", `Season Shot Breakdown`)
         .attr("class", "breakdownbutton")
         .on("click", function (d, i) {
             clearChart();

@@ -142,12 +142,33 @@ function displayAllGamesButton(playerName, season) {
         })
 }
 
+function sideScroll(element, direction, speed, distance, step) {
+    let scrollAmount = 0;
+    const slideTimer = setInterval(function () {
+        direction == "left" ? element.scrollLeft -= step : element.scrollLeft += step;
+
+        scrollAmount += step;
+
+        if (scrollAmount >= distance) window.clearInterval(slideTimer);
+    }, speed);
+}
+
 function displayPlayerGames(games, season) {
     d3.selectAll(".games li").remove();
     d3.selectAll(".search h3").remove();
 
     const allGames = games;
     const activeClass = "selectedgame";
+
+    d3.select(".leftarr")
+        .append("input")
+        .property("type", "button")
+        .attr("class", "leftarrow")
+        .attr("value", "L")
+        .on("click", function(d, i) {
+            const container = d3.select('.games-div')._groups[0][0]
+            sideScroll(container, "left", 25, 100, 10);
+        })
 
     Object.keys(allGames).forEach( (date) => {
         const opp = allGames[date][0].split(" ");
@@ -178,6 +199,16 @@ function displayPlayerGames(games, season) {
                 d3.select(this.parentElement).classed(activeClass, !alreadyIsActive);
             })
     })
+
+    d3.select(".rightarr")
+        .append("input")
+        .property("type", "button")
+        .attr("class", "rightarrow")
+        .attr("value", "R")
+        .on("click", function (d, i) {
+            const container = d3.select('.games-div')._groups[0][0]
+            sideScroll(container, "right", 25, 120, 10);
+        })
 }
 
 function clearPlayerGames() {

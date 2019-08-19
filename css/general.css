@@ -143,11 +143,49 @@ input::placeholder {
     color: skyblue;
 }
 
+.leftarr, .right {
+    height: 120px;
+    width: 10%;
+}
+
+.leftarrow, .rightarrow {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 120px;
+    background: black;
+    color: rgba(213, 213, 213, 0.249);
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    border-color: black;
+}
+
+.leftarrow:focus, .rightarrow:focus {
+    outline: none;
+}
+
+.leftarrow:hover, .rightarrow:hover {
+    color: skyblue;
+}
+
+.games-arrows {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+}
+
 .games-div {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    width: 90%;
+    width: 100%;
+    overflow: scroll;
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+}
+
+.games-div::-webkit-scrollbar {
+    display: none;
 }
 
 .games {
@@ -156,8 +194,8 @@ input::placeholder {
     display: flex;
     flex-direction: row;
     box-sizing: border-box;
-    overflow-x: auto;
-    width: 100%;
+    width: 120%;
+    white-space: nowrap;
 }
 
 .games li {

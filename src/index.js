@@ -44,7 +44,8 @@ function randomButton() {
                     displaySeasonSelector();
                     
                     d3.selectAll(".searchfield").classed("initial", false);
-                    d3.selectAll(".searchfield").property("placeholder", playerName)
+                    d3.selectAll(".searchresults").classed("initialresults", false);
+                    d3.selectAll(".searchfield").property("placeholder", playerName);
 
                     d3.selectAll(".lucky").remove();
                 })
@@ -91,6 +92,7 @@ function clearSearch(playerName) {
 }
 
 function playerMenu(searchText, season) {
+    d3.selectAll(".lucky").remove();
     clearPlayerMenuResults();
 
     d3.csv(`./dataset/${season}.csv`)

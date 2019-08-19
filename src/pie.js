@@ -2,7 +2,6 @@ const CONSTANTS = {
     WIDTH: 200,
     HEIGHT: 200,
     MARGIN: 40,
-    // CSV: "../dataset/dataset.csv",
 }
 
 class Pie {
@@ -10,7 +9,7 @@ class Pie {
         this.svg = svg;
         this.playerName = playerName;
 
-        this.csv = `../dataset/${season}.csv`;
+        this.csv = `./dataset/${season}.csv`;
     }
 
     madeMissedStats(timeline) {

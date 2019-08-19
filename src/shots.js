@@ -10,7 +10,7 @@ class Shots {
     constructor(svg, playerName, season, date, period) {
         this.svg = svg;
         
-        d3.csv(`../dataset/${season}.csv`)
+        d3.csv(`./dataset/${season}.csv`)
             .then(function (d) {
                 d.forEach(player => {
                     const dateConditional = date === undefined ? true : player.game_date === date;

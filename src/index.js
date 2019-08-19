@@ -60,7 +60,7 @@ function clearSearch(playerName) {
 function playerMenu(searchText, season) {
     clearPlayerMenuResults();
 
-    d3.csv(`../dataset/${season}.csv`)
+    d3.csv(`./dataset/${season}.csv`)
         .then(function (data) {
             const searchLength = searchText.length;
             let players = {};
@@ -98,7 +98,7 @@ function playerMenu(searchText, season) {
 }
 
 function loadPlayerGames(player, season) {
-    d3.csv(`../dataset/${season}.csv`)
+    d3.csv(`./dataset/${season}.csv`)
         .then(function (data) {
             const games = {};
             data.forEach(shot => {

@@ -1,5 +1,8 @@
 # NBAShotTracker
 
+[View Live Site Here](https://ebaek.github.io/NBAShotTracker/)
+---
+
 ![overview image with basketball plot, selectors, and search](screenshots/overview.png)
 
 ## Background and Overview
@@ -39,6 +42,7 @@
     * I used R Studio to sort the shots in chronological order (game dates)
   * The team indicator accounts for player trades throughout the NBA season.
   * After selecting a game, users can filter shots by quarter.
+  
   ![game search menu with logos of the teams](screenshots/gamesearch.png)
 
   
@@ -66,6 +70,7 @@
     }
   }
   ```
+  
   ![search bar with 6 results](screenshots/searchbar.png)
 
 
@@ -102,6 +107,7 @@
             
         }).then((stats) => { this.render(stats, "Shot Type"); });
     ```
+    
    ![season shot breakdown pie charts with 6 metrics](screenshots/seasonbreakdown.png)
 
 ## Architecture and Technologies

@@ -119,12 +119,13 @@ class Court {
             .attr('fill', 'skyblue')
         
         this.svg.append("text")
-            .attr("x", 430)
+            .attr("x", 434)
             .attr("y", 436)
+            .attr("font-size", 14)
             .attr("dy", ".35em")
             .attr("font-family", "Oswald")
             .text("Made")
-            .style("fill", "white")
+            .style("fill", "#D5D5D5")
 
         // key missed
         this.svg.append('rect')
@@ -135,12 +136,13 @@ class Court {
             .attr('fill', 'darkred')
 
         this.svg.append("text")
-            .attr("x", 423)
+            .attr("x", 428)
             .attr("y", 416)
             .attr("dy", ".35em")
+            .attr("font-size", 14)
             .attr("font-family", "Oswald")
             .text("Missed")
-            .style("fill", "white")
+            .style("fill", "#D5D5D5")
     }
 }
 

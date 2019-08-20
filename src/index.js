@@ -157,7 +157,6 @@ function displayPlayerTeam(team) {
 
     d3.select(".teamseason").append("h3").text(`Team: ${team}`)
     d3.select(".teamseason").append("h3").text(`Search by Season`).classed("seasonlabel")
-
 }
 
 function displayAllGamesButton(playerName, season) {
@@ -201,7 +200,6 @@ function displayPlayerGames(games, season) {
     d3.selectAll(".search h3").remove();
     d3.selectAll(".leftarrow").remove();
     d3.selectAll(".rightarrow").remove();
-
 
     const allGames = games;
     const activeClass = "selectedgame";

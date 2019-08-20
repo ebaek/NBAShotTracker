@@ -109,6 +109,38 @@ class Court {
             .attr("d", rimArc)
             .attr("fill", "white")
             .attr("transform", "rotate(180) translate(-250, -40)")
+
+        // key made 
+        this.svg.append('rect')
+            .attr('x', 470.5)
+            .attr('y', 430)
+            .attr('width', 50)
+            .attr('height', 12)
+            .attr('fill', 'skyblue')
+        
+        this.svg.append("text")
+            .attr("x", 430)
+            .attr("y", 436)
+            .attr("dy", ".35em")
+            .attr("font-family", "Oswald")
+            .text("Made")
+            .style("fill", "white")
+
+        // key missed
+        this.svg.append('rect')
+            .attr('x', 470.5)
+            .attr('y', 410)
+            .attr('width', 50)
+            .attr('height', 12)
+            .attr('fill', 'darkred')
+
+        this.svg.append("text")
+            .attr("x", 423)
+            .attr("y", 416)
+            .attr("dy", ".35em")
+            .attr("font-family", "Oswald")
+            .text("Missed")
+            .style("fill", "white")
     }
 }
 

@@ -66,6 +66,8 @@ class Shots {
                 .attr("stroke-width", "0.1px");
         }
     }
+
+    
 }
 
 export default Shots;

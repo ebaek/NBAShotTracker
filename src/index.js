@@ -326,6 +326,10 @@ function getTeamname() {
 function displayGameBreakdownButton(playerName, season) {
     d3.selectAll(".breakdownbutton").remove();
 
+    d3.select("#svgcontainer")
+        .append("div")
+        .attr("class", "breakdownloading")
+
     d3.select(".breakdown-div")
         .append("input")
         .property("type", "button")

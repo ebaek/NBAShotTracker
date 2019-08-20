@@ -57,6 +57,7 @@ h1 {
     flex-wrap: wrap;
     margin-left: 2%;
     width: 600px;
+    z-index: -1;
 }
 
 body {
@@ -262,7 +263,6 @@ input::placeholder {
     justify-content: center;
     width: 60%;
 }
-
 
 .allshotsbutton, .breakdownbutton {
     width: 100%;

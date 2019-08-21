@@ -152,6 +152,7 @@ input::placeholder {
 }
 
 .seasonselect-div {
+    margin-top: 2.5%;
     position: relative;
     display: flex;
     width: 92%;

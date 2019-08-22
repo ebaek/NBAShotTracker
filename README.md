@@ -14,7 +14,7 @@
   ### High Level Overview: 
   * The NBA Shot Tracker renders an individual player's shot performance. Users can 
   filter the data by game (game date), quarter, and defending team from the 2010-2017 seasons. Users can also 
-  compare the indivial player's performance against various metrics includings (field goal attempts v.s. team (FGA), field 
+  compare the indivial player's performance against various metrics including (field goal attempts v.s. team (FGA), field 
   goals made v.s. team (FGM), distance, shot- type, and more.
   
 ## Architecture and Technologies

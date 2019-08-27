@@ -117,7 +117,7 @@ class Court {
             .attr('width', 50)
             .attr('height', 12)
             .attr('fill', 'skyblue')
-        
+
         this.svg.append("text")
             .attr("x", 434)
             .attr("y", 436)

@@ -9,7 +9,8 @@ const CONSTANTS = {
 class Shots {
     constructor(svg, playerName, season, date, period) {
         this.svg = svg;
-        
+        this.played = false;
+
         d3.csv(`./dataset/${season}.csv`)
             .then(function (d) {
                 d.forEach(player => {
@@ -17,9 +18,16 @@ class Shots {
                     const periodConditional = period === undefined ? true : player.period === period;
 
                     if (player.name === playerName && dateConditional && periodConditional) {
-                        player.shot_made_flag === "1" ? this.render([player.x, player.y], "made") : this.render([player.x, player.y], "missed");
+                        this.played = true;
+                        if (player.shot_made_flag === "1"){
+                            this.render([player.x, player.y], "made");
+                        } else {
+                            this.render([player.x, player.y], "missed");
+                        }
                     }
                 })
+                // render unavailable message if player did not play in season
+                if(!this.played) this.renderUnavailable();
             }.bind(this))
     }
 
@@ -33,6 +41,17 @@ class Shots {
             }
         }
         return centers;
+    }
+
+    renderUnavailable() {
+        this.svg.append("text")
+            .attr("x", 50)
+            .attr("y", 150)
+            .attr("dy", ".35em")
+            .attr("font-size", 34)
+            .attr("font-family", "Oswald")
+            .text("Player Injured / Not Yet Drafted")
+            .style("fill", "#D5D5D5")
     }
 
     render(playerPos, shotFlag) {

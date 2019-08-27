@@ -7,6 +7,17 @@ html, body {
     overflow-x: hidden;
 }
 
+.estherbaek {
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    color: white;
+    margin: 0;
+    margin-top: 5px;
+    padding: 0;
+}
+
 h1 { 
     display: flex;
     justify-content: center;

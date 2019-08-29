@@ -53,7 +53,7 @@
 
   
   ### Search Bar: 
-  * Search bar includes all NBA players in the 2010-2018 season.
+  * Search bar includes all NBA players in the 2010-2017 season.
   * In order to maximize performance, I wrote a debounce function that delays a database query when a user is searching for a 
   player
   

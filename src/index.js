@@ -281,13 +281,13 @@ export function clearPies() {
     d3.selectAll("#svgcontainer svg").remove();
 }
 
-function displaySeasonSelector(selectedOption = 2018) {
+function displaySeasonSelector(selectedOption = 2017) {
     d3.select(".seasonselect-div select").remove();
     d3.select(".seasonlabel").remove();
 
     d3.select(".seasonselect-div").append("select");
 
-    for(let i = 2018; i >= 2010; i--) {
+    for(let i = 2017; i >= 2010; i--) {
         if(i === selectedOption) {
             d3.select(".seasonselect-div select")
                 .append("option")

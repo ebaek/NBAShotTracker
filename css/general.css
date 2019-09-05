@@ -130,13 +130,12 @@ input::placeholder {
   z-index: 1;
   position: absolute;
   width: 27%;
-  top: 153px;
+  margin-top: 2.5%;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 0;
-  margin: 0;
   list-style-type: none;
   background: black;
   font-family: 'Oswald', sans-serif;
